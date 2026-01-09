@@ -1,9 +1,9 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { Suspense, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function AdminLoginPage() {
+function AdminLoginContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -112,5 +112,13 @@ export default function AdminLoginPage() {
                 </form>
             </div>
         </div>
+    );
+}
+
+export default function AdminLoginPage() {
+    return (
+        <Suspense fallback={<div className="p-12 text-center">Loading...</div>}>
+            <AdminLoginContent />
+        </Suspense>
     );
 }
