@@ -7,10 +7,11 @@ function AdminLoginContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const API_URL = useMemo(
-        () => process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api',
-        []
-    );
+    const API_URL = useMemo(() => {
+        const raw = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        const trimmed = raw.endsWith('/') ? raw.slice(0, -1) : raw;
+        return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+    }, []);
 
     const nextPath = searchParams.get('next') || '/registration/ieeecertificate';
 

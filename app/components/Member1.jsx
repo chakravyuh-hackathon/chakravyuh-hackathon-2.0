@@ -16,8 +16,8 @@ export default function Page() {
   {
     teamName: "Social Media",
     members: [
-      { name: "Prathamesh Hatti", role: "", image: "/Social%20Media/hatti.jpeg" },
-      { name: "Siraj Sayyad", role: "", image: "/Social%20Media/Siraj Sayyad.jpg" },
+      { name: "Prathamesh Hatti", role: "", image: "/Social%20media/hatti.jpeg" },
+      { name: "Siraj Sayyad", role: "", image: "/Social%20media/Siraj%20Sayyad.jpg" },
     ],
   },
   {
@@ -26,7 +26,6 @@ export default function Page() {
       { name: "Mrudula Maske", role: "", image: "/Design%20Team/design2.jpg" },
       { name: "Ankita Jadhav", role: "", image: "/Design%20Team/design1.jpeg" },
       { name: "Meghnath Khatal", role: "", image: "/Design%20Team/Megh Khatal.jpg" },
-
     ],
   },
   {

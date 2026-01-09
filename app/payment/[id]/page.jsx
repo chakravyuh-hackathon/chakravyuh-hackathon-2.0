@@ -42,7 +42,9 @@ export default function PaymentPage() {
                     setError('Invalid payment link');
                     return;
                 }
-                const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+                const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+                const trimmed = rawApiUrl.endsWith('/') ? rawApiUrl.slice(0, -1) : rawApiUrl;
+                const API_URL = trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
                 const response = await fetch(`${API_URL}/registrations/${id}`);
                 const result = await response.json();
 
@@ -73,7 +75,9 @@ export default function PaymentPage() {
             if (!id) {
                 throw new Error('Invalid payment link');
             }
-            const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+            const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+            const trimmed = rawApiUrl.endsWith('/') ? rawApiUrl.slice(0, -1) : rawApiUrl;
+            const API_URL = trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
 
             const orderResponse = await fetch(`${API_URL}/registrations/${id}/create-order`, {
                 method: 'POST',

@@ -76,14 +76,14 @@ export default function Page() {
   };
 
   return (
-    <section id="home" className="relative flex justify-center items-center w-full min-h-[100svh] overflow-hidden">
+    <section id="home" className="relative flex justify-center items-center w-full min-h-svh overflow-hidden">
 
       {/* INTRO */}
-      <div ref={introOverlayRef} className="z-[999] fixed inset-0 flex justify-center items-center bg-[#050510]">
+      <div ref={introOverlayRef} className="z-999 fixed inset-0 flex justify-center items-center bg-[#050510]">
         <div ref={introGlowRef} className="absolute bg-purple-500/20 blur-3xl rounded-full w-72 sm:w-[420px] h-72 sm:h-[420px]" />
-        <div ref={scanLineRef} className="absolute bg-gradient-to-r from-transparent via-white/20 to-transparent w-[50%] h-full skew-x-12" />
+        <div ref={scanLineRef} className="absolute bg-linear-to-r from-transparent via-white/20 to-transparent w-[50%] h-full skew-x-12" />
         <h1 ref={introTextRef} className="font-black text-white text-4xl sm:text-7xl text-center">
-          CHAKRAVYUH <span className="bg-clip-text bg-gradient-to-r from-amber-400 to-purple-400 text-transparent">2.0</span>
+          CHAKRAVYUH <span className="bg-clip-text bg-linear-to-r from-amber-400 to-purple-400 text-transparent">2.0</span>
         </h1>
       </div>
 
@@ -99,7 +99,7 @@ export default function Page() {
         </div>
 
         <h1 className="font-black text-white text-3xl sm:text-5xl md:text-7xl">
-          CHAKRAVYUH <span className="bg-clip-text bg-gradient-to-r from-amber-400 to-purple-400 text-transparent">2.0</span>
+          CHAKRAVYUH <span className="bg-clip-text bg-linear-to-r from-amber-400 to-purple-400 text-transparent">2.0</span>
         </h1>
 
         <ReactTyped
@@ -147,7 +147,7 @@ export default function Page() {
     {/* Animated Filling Overlay */}
     <div 
       ref={registerOverlayRef} 
-      className="left-0 absolute inset-y-0 bg-gradient-to-r from-purple-700 via-indigo-600 to-blue-600 opacity-90 w-0 transition-all duration-500" 
+      className="left-0 absolute inset-y-0 bg-linear-to-r from-purple-700 via-indigo-600 to-blue-600 opacity-90 w-0 transition-all duration-500" 
     />
     
     {/* Button Content */}

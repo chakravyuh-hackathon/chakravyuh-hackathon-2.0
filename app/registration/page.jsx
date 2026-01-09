@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const loadRazorpayScript = () => {
@@ -16,6 +16,12 @@ const loadRazorpayScript = () => {
 export default function RegistrationPage() {
     const router = useRouter();
     const razorpayScriptPromiseRef = useRef(null);
+    const API_URL = useMemo(() => {
+        const raw = process.env.NEXT_PUBLIC_API_URL;
+        if (!raw) return '/api';
+        const trimmed = raw.endsWith('/') ? raw.slice(0, -1) : raw;
+        return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+    }, []);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -140,8 +146,6 @@ export default function RegistrationPage() {
             // For now, hardcoding localhost:5000 if not proxying, or using relative path if proxy configured
             // But Next.js won't proxy by default without config. Let's start with FULL URL or configure proxy.
             // I'll use NEXT_PUBLIC_API_URL or default to localhost:5000
-            const API_URL = '/api';
-
             const registrationPayload = new FormData();
             registrationPayload.append('fullName', formData.fullName);
             registrationPayload.append('email', formData.email);

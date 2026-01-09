@@ -7,7 +7,7 @@ const organisers = [
   { name: "Shripriya Karande", role: "Overall Lead", image: "/Head/Shree.jpg", linkedin: "https://www.linkedin.com/in/shripriya-karande-0a733a292" },
   { name: "Dipak Pawar", role: "Lead Organizer", image: "/Head/Dipak.png", linkedin: "http://www.linkedin.com/in/dipakpawar356" },
   { name: "Onkar Bhosale", role: "Co-Lead Organizer", image: "/Head/Onkar.jpeg", linkedin: "https://www.linkedin.com/in/onkarbhosale-" },
-  { name: "Suraj Mali", role: "Technical Head", image: "/Head/Surajsmali.jpeg", linkedin: "https://www.linkedin.com/in/suraj-s-mali/" },
+  { name: "Suraj Mali", role: "Technical Head", image: "/Head/suraj.jpeg", linkedin: "https://www.linkedin.com/in/suraj-s-mali/" },
   { name: "Abhijit Birajdar", role: "Technical Head", image: "/Head/Abhijit.jpeg", linkedin: "https://www.linkedin.com/in/abhijeet-birajdar-8a3842358" },
   { name: "Nishant Jadhav", role: "Design Head", image: "/Head/Nishu.jpeg", linkedin: "https://www.linkedin.com/in/nishant-jadhav007/" },
    { name: "Sneha Bodake", role: "Design Head", image: "/Head/Sneha.jpeg", linkedin: "https://www.linkedin.com/in/sneha-bodake-a40024372/" },
