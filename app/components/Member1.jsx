@@ -32,7 +32,7 @@ export default function Page() {
     teamName: "Finance Team",
     members: [
       { name: "Vishal Koli", role: "", image: "/FinanceTeam/Vishal%20.jpeg" },
-      { name: "Bhagyavan Saykar", role: "", image: "/FinanceTeam/Bhagyvan%20Saykar.jpg" },
+      { name: "Bhagyavan Saykar", role: "", image: "/FinanceTeam/saykar.jpg" },
       { name: "Rohan Bole", role: "", image: "/FinanceTeam/Rohan%20Bole.jpg" },
       { name: "Yogita Gajare", role: "", image: "/FinanceTeam/YOGITA%20GAJARE.jpeg" },
     ],
@@ -45,6 +45,14 @@ export default function Page() {
       { name: "Vijay Abhivant", role: "", image: "/Hardware/VIJAY%20ABHIVANT.jpg" },
     ],
   },
+   {
+  teamName: "Food Team",
+  members: [
+    { name: "Rohan Savale", role: "", image: "/Food/rohan.jpeg" },
+    { name: "Ashutosh Barbole", role: "", image: "/Food/ashutoshmalape.jpeg" },
+    { name: "Ashutosh Malape", role: "", image: "/Food/ashutoshbarbole.jpeg" },
+  ],
+},
   {
     teamName: "Swag Team",
     members: [
