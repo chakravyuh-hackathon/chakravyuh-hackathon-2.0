@@ -4,6 +4,8 @@ import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import jsPDF from 'jspdf';
+import { MessageCircle } from 'lucide-react';
+
 
 function SuccessContent() {
     const searchParams = useSearchParams();
@@ -272,6 +274,16 @@ function SuccessContent() {
                     Confirmation email sent to <br />
                     <span className="font-medium">{data.email}</span>
                 </p>
+
+                {/* WHATSAPP BUTTON */}
+                <Link
+                    href="https://chat.whatsapp.com/EDj3X8AhUXZ0UvOlTbMBL7"
+                    target="_blank"
+                    className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 mb-4 px-6 py-3 rounded-lg font-semibold text-white transition"
+                >
+                    <MessageCircle size={20} />
+                    Join WhatsApp Group
+                </Link>
 
                 <Link
                     href="/"
