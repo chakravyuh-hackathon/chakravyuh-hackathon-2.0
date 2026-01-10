@@ -17,10 +17,7 @@ export default function RegistrationPage() {
     const router = useRouter();
     const razorpayScriptPromiseRef = useRef(null);
     const API_URL = useMemo(() => {
-        const raw = process.env.NEXT_PUBLIC_API_URL;
-        if (!raw) return '/api';
-        const trimmed = raw.endsWith('/') ? raw.slice(0, -1) : raw;
-        return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+        return '/api';
     }, []);
     const [formData, setFormData] = useState({
         fullName: '',
@@ -239,7 +236,12 @@ export default function RegistrationPage() {
 
         } catch (error) {
             console.error('Registration error:', error);
-            setError(error.message || 'An error occurred. Please try again.');
+            const message = error?.message || 'An error occurred. Please try again.';
+            if (error instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
+                setError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
+            } else {
+                setError(message);
+            }
         } finally {
             setLoading(false);
         }

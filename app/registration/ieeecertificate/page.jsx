@@ -6,9 +6,7 @@ import { useRouter } from 'next/navigation';
 export default function IeeeCertificatesPage() {
     const router = useRouter();
     const API_URL = useMemo(() => {
-        const raw = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-        const trimmed = raw.endsWith('/') ? raw.slice(0, -1) : raw;
-        return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+        return '/api';
     }, []);
 
     const [token, setToken] = useState('');
@@ -128,7 +126,12 @@ export default function IeeeCertificatesPage() {
                 setSelectedDetails(json?.data || null);
             } catch (e) {
                 setSelectedDetails(null);
-                setDetailsError(e?.message || 'Failed to fetch registration details');
+                const message = e?.message || 'Failed to fetch registration details';
+                if (e instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
+                    setDetailsError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
+                } else {
+                    setDetailsError(message);
+                }
             } finally {
                 setDetailsLoading(false);
             }
@@ -225,7 +228,12 @@ export default function IeeeCertificatesPage() {
 
                 setRows(Array.isArray(json.data) ? json.data : []);
             } catch (e) {
-                setError(e?.message || 'Failed to fetch registrations');
+                const message = e?.message || 'Failed to fetch registrations';
+                if (e instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
+                    setError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
+                } else {
+                    setError(message);
+                }
             } finally {
                 setLoading(false);
             }
@@ -305,7 +313,12 @@ export default function IeeeCertificatesPage() {
                 setCertificateBlobUrl(url);
             } catch (e) {
                 setCertificateBlobUrl('');
-                setCertificateError(e?.message || 'Failed to fetch IEEE certificate');
+                const message = e?.message || 'Failed to fetch IEEE certificate';
+                if (e instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
+                    setCertificateError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
+                } else {
+                    setCertificateError(message);
+                }
             } finally {
                 setCertificateLoading(false);
             }

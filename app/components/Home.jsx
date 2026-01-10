@@ -126,13 +126,13 @@ export default function Page() {
         <div className="flex sm:flex-row flex-col gap-4 mt-4 w-full sm:w-auto">
   {/* 1. Rules Link - "Cosmic Glass" Style */}
   <a
-    href="/Footer-PDF/CHAKRAVYUH 2.0-RULE BOOK.pdf"
+    href="https://drive.google.com/file/d/1lfUhAfn0u-OM3uj5MlEVb3r6Q1Kiv0kJ/view?usp=sharing"
     target="_blank"
     rel="noopener noreferrer"
     className="flex justify-center items-center gap-2 bg-white/5 hover:bg-white/10 shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:shadow-[0_0_25px_rgba(168,85,247,0.5)] backdrop-blur-xl px-8 py-3 border border-purple-500/40 hover:border-purple-400 rounded-full w-full sm:w-auto font-semibold text-purple-100 tracking-widest hover:scale-105 active:scale-95 transition-all duration-300"
   >
     <ScrollText size={18} className="text-purple-400" />
-    BROCHURE
+    RULES
   </a>
 
   {/* 2. Register Button - "Nebula Pulse" Style */}

@@ -17,6 +17,7 @@ export default function PaymentPage() {
     const router = useRouter();
     const params = useParams();
     const id = params?.id;
+    const API_URL = '/api';
     const [registration, setRegistration] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -42,9 +43,6 @@ export default function PaymentPage() {
                     setError('Invalid payment link');
                     return;
                 }
-                const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-                const trimmed = rawApiUrl.endsWith('/') ? rawApiUrl.slice(0, -1) : rawApiUrl;
-                const API_URL = trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
                 const response = await fetch(`${API_URL}/registrations/${id}`);
                 const result = await response.json();
 
@@ -58,7 +56,7 @@ export default function PaymentPage() {
                     setError(result.message || 'Registration not found');
                 }
             } catch {
-                setError('Error fetching registration details');
+                setError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
             } finally {
                 setLoading(false);
             }
@@ -75,9 +73,6 @@ export default function PaymentPage() {
             if (!id) {
                 throw new Error('Invalid payment link');
             }
-            const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-            const trimmed = rawApiUrl.endsWith('/') ? rawApiUrl.slice(0, -1) : rawApiUrl;
-            const API_URL = trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
 
             const orderResponse = await fetch(`${API_URL}/registrations/${id}/create-order`, {
                 method: 'POST',
@@ -126,7 +121,12 @@ export default function PaymentPage() {
                 setError(`Payment failed: ${res.error.description}`)
             );
         } catch (err) {
-            setError(err.message || 'Payment initiation failed');
+            const message = err?.message || 'Payment initiation failed';
+            if (err instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
+                setError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
+            } else {
+                setError(message);
+            }
         } finally {
             setProcessing(false);
         }

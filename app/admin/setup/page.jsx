@@ -1,15 +1,13 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminSetupPage() {
     const router = useRouter();
 
     const API_URL = useMemo(() => {
-        const raw = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-        const trimmed = raw.endsWith('/') ? raw.slice(0, -1) : raw;
-        return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+        return '/api';
     }, []);
 
     const [name, setName] = useState('');
@@ -18,17 +16,47 @@ export default function AdminSetupPage() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [setupKey, setSetupKey] = useState('');
 
+    const [adminExists, setAdminExists] = useState(false);
+    const [setupKeyRequired, setSetupKeyRequired] = useState(false);
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    useEffect(() => {
+        let cancelled = false;
+
+        const loadStatus = async () => {
+            try {
+                const res = await fetch(`${API_URL}/admin/setup`, { method: 'GET' });
+                const text = await res.text();
+                const json = text ? JSON.parse(text) : null;
+                if (cancelled) return;
+                if (res.ok && json?.success) {
+                    setAdminExists(Boolean(json.adminExists));
+                    setSetupKeyRequired(Boolean(json.setupKeyRequired));
+                }
+            } catch {
+                if (!cancelled) {
+                    setAdminExists(false);
+                    setSetupKeyRequired(false);
+                }
+            }
+        };
+
+        loadStatus();
+        return () => {
+            cancelled = true;
+        };
+    }, [API_URL]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setSuccess('');
 
-        if (!setupKey || !setupKey.trim()) {
-            setError('Setup Key is required');
+        if (adminExists) {
+            router.replace(`/admin/login?next=${encodeURIComponent('/registration/ieeecertificate')}`);
             return;
         }
 
@@ -37,14 +65,23 @@ export default function AdminSetupPage() {
             return;
         }
 
+        if (setupKeyRequired && !(setupKey || '').trim()) {
+            setError('Secret key is required');
+            return;
+        }
+
         setLoading(true);
         try {
             const body = {
                 name,
                 email,
-                password,
-                setupKey: setupKey.trim()
+                password
             };
+
+            const trimmedSetupKey = (setupKey || '').trim();
+            if (trimmedSetupKey) {
+                body.setupKey = trimmedSetupKey;
+            }
 
             const res = await fetch(`${API_URL}/admin/setup`, {
                 method: 'POST',
@@ -52,10 +89,20 @@ export default function AdminSetupPage() {
                 body: JSON.stringify(body)
             });
 
-            const json = await res.json();
+            const text = await res.text();
+            let json = null;
+            try {
+                json = text ? JSON.parse(text) : null;
+            } catch {
+                json = null;
+            }
 
             if (!res.ok || !json?.success || !json?.token) {
-                throw new Error(json?.message || 'Admin setup failed');
+                if (!json) {
+                    const snippet = (text || '').toString().slice(0, 250);
+                    throw new Error(`Admin setup failed (HTTP ${res.status}). ${snippet || 'No response body'}`);
+                }
+                throw new Error(json?.message || `Admin setup failed (HTTP ${res.status})`);
             }
 
             localStorage.setItem('adminToken', json.token);
@@ -66,7 +113,12 @@ export default function AdminSetupPage() {
             setSuccess('Admin created successfully. Redirecting...');
             router.replace('/registration/ieeecertificate');
         } catch (err) {
-            setError(err?.message || 'Admin setup failed');
+            const message = err?.message || 'Admin setup failed';
+            if (err instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
+                setError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
+            } else {
+                setError(message);
+            }
         } finally {
             setLoading(false);
         }
@@ -148,7 +200,6 @@ export default function AdminSetupPage() {
                             type="text"
                             value={setupKey}
                             onChange={(e) => setSetupKey(e.target.value)}
-                            required
                             className="bg-white/5 px-4 py-3 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/40 w-full text-white placeholder:text-gray-500"
                             placeholder="Enter Secret Key"
                         />

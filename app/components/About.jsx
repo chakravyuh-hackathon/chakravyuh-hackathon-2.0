@@ -158,18 +158,22 @@ export default function Page() {
         className="z-10 relative bg-white/5 shadow-[0_0_80px_rgba(0,0,0,0.6)] backdrop-blur-2xl p-8 md:p-16 border border-white/10 rounded-[40px] max-w-4xl text-center"
       >
         <div className="space-y-6 text-gray-300 text-sm md:text-lg md:text-center text-justify leading-relaxed">
-          <p>
-            We are active leaders & passionate community builders working toward strengthening the region
-            to provide equal opportunities for all tech enthusiasts and career aspirants.
-          </p>
-          <p>
-            Our motive combines technical and cultural growth, creating an inclusive environment
-            to learn, innovate, and collaborate as a team.
-          </p>
-          <p className="mt-6 font-semibold text-white text-base md:text-xl">
-            We proudly organize the biggest hackathon of Central India to elevate regional tech talent.
-          </p>
-        </div>
+  <p>
+    Where passion meets purpose. Chakravyuh 2.0 is organized by a team of
+    dedicated volunteers committed to building a strong and inclusive
+    tech community.
+  </p>
+
+  <p>
+    This 36-hour hackathon is designed to go beyond coding — encouraging
+    learning, collaboration, and meaningful connections in a welcoming
+    environment.
+  </p>
+
+  <p className="mt-6 font-semibold text-white text-base md:text-xl">
+    More than a competition, Chakravyuh 2.0 is a place to connect and create together.
+  </p>
+</div>
 
         <div className="flex justify-center items-center gap-4 mt-10">
           <div className="bg-linear-to-r from-transparent to-[#B14BF4] w-12 h-px" />

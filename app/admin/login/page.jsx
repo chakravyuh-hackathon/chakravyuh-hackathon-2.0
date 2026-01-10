@@ -8,9 +8,7 @@ function AdminLoginContent() {
     const searchParams = useSearchParams();
 
     const API_URL = useMemo(() => {
-        const raw = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-        const trimmed = raw.endsWith('/') ? raw.slice(0, -1) : raw;
-        return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+        return '/api';
     }, []);
 
     const nextPath = searchParams.get('next') || '/registration/ieeecertificate';
@@ -48,7 +46,12 @@ function AdminLoginContent() {
 
             router.replace(nextPath);
         } catch (err) {
-            setError(err?.message || 'Login failed');
+            const message = err?.message || 'Login failed';
+            if (err instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
+                setError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
+            } else {
+                setError(message);
+            }
         } finally {
             setLoading(false);
         }
