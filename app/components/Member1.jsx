@@ -79,7 +79,7 @@ export default function Page() {
       { name: "Sakshi Patil", role: "", image: "/Mangment%20Team/Sakshi%20Patil.jpg" },
       { name: "Shruti Ingale", role: "", image: "/Mangment%20Team/Shruti%20Ingale.png" },
       { name: "Snehal Rupanwar", role: "", image: "/Mangment%20Team/SNEHAL%20RUPANWAR.jpeg" },
-      { name: "Sumit Yalmar", role: "", image: "/Mangment%20Team/Sumit%20Yalmar.jpg" },
+      { name: "Sumit Yalmar", role: "", image: "/Mangment%20Team/sumit.jpeg" },
       { name: "Sushant Shete", role: "", image: "/Mangment%20Team/SUSHANT%20SHETE.png" },
       { name: "Gaytri Kale", role: "", image: "/Mangment%20Team/Gayatri Kale.jpeg" },
     ],
@@ -104,7 +104,8 @@ export default function Page() {
     members: [
       { name: "Rutuja Rajmane", role: "", image: "/Reg/Rutuja%20Rajmane.jpg" },
       { name: "Supriya Kore", role: "", image: "/Reg/Supriya%20kore.jpg" },
-      { name: "Vaibhavi Kumbhar", role: "", image: "/Reg/Vaibhavi%20Kumbhar.jpg" }
+      { name: "Vaibhavi Kumbhar", role: "", image: "/Reg/Vaibhavi%20Kumbhar.jpg" },
+         { name: "Omkar Dhekane", role: "", image: "/Reg/OMKAR.jpeg" }
     ]
   },
   {

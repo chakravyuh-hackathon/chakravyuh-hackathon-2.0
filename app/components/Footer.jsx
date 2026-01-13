@@ -123,15 +123,29 @@ export default function Footer() {
           className="flex items-center gap-2 mt-4 text-gray-400 text-xs md:text-sm cursor-pointerfont-semibold curse">
             <Phone size={16} /> +91 9527747796
           </a>
+           <a
+           href="tel:8669233747"
+          className="flex items-center gap-2 mt-4 text-gray-400 text-xs md:text-sm cursor-pointerfont-semibold curse">
+                 <Phone size={16} /> +91 8669233747
+          </a>
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className="mx-auto mt-16 pt-10 border-gray-800/50 border-t w-full max-w-7xl text-center">
-        <p className="font-bold text-gray-500 text-xs md:text-sm uppercase tracking-[0.4em]">
-          Made with <span className="text-red-600 text-lg animate-pulse">❤️</span> by Team Chakravyuh
-        </p>
-      </div>
+  
+  <p className="font-bold text-gray-500 text-xs md:text-sm uppercase tracking-[0.4em]">
+    Made with <span className="text-red-500 text-lg animate-pulse">❤️</span> by 
+    <span className="ml-1 text-blue-400">Team Chakravyuh</span>
+  </p>
+
+  <p className="mt-3 text-[11px] text-gray-600 md:text-xs">
+    © {new Date().getFullYear()} <span className="font-medium text-gray-400">Chakravyuh 2.0</span>. 
+    All Rights Reserved.
+  </p>
+
+</div>
+
 
     </footer>
   );
