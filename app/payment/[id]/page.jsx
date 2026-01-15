@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
-const loadRazorpayScript = () => {
+const loadCashfreeScript = () => {
     return new Promise((resolve) => {
         const script = document.createElement('script');
-        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
         script.onload = () => resolve(true);
         script.onerror = () => resolve(false);
         document.body.appendChild(script);
@@ -85,41 +85,20 @@ export default function PaymentPage() {
                 throw new Error(orderData.message || 'Failed to create payment order');
             }
 
-            const isLoaded = await loadRazorpayScript();
-            if (!isLoaded) throw new Error('Razorpay SDK failed to load');
+            const isLoaded = await loadCashfreeScript();
+            if (!isLoaded) throw new Error('Cashfree SDK failed to load');
 
-            const options = {
-                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_placeholder',
-                amount: orderData.order.amount,
-                currency: orderData.order.currency,
-                name: 'Chakravyuh 2.0',
-                description: `Payment for ${registration.event}`,
-                order_id: orderData.order.id,
-                handler: async function (response) {
-                    router.replace(`/registration/success?id=${id}&verifying=1`);
+            const mode = (process.env.NEXT_PUBLIC_CASHFREE_MODE || 'sandbox').toString();
+            const cashfree = window.Cashfree({ mode });
 
-                    fetch(`${API_URL}/registrations/${id}/verify-payment`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(response),
-                        keepalive: true
-                    }).catch(() => {
-                        // The success page will handle pending/failed confirmation by polling.
-                    });
-                },
-                prefill: {
-                    name: registration.fullName,
-                    email: registration.email,
-                    contact: registration.phone
-                },
-                theme: { color: '#4a6cf7' }
-            };
+            if (!orderData.paymentSessionId) {
+                throw new Error('Missing Cashfree payment session id');
+            }
 
-            const rzp = new window.Razorpay(options);
-            rzp.open();
-            rzp.on('payment.failed', (res) =>
-                setError(`Payment failed: ${res.error.description}`)
-            );
+            cashfree.checkout({
+                paymentSessionId: orderData.paymentSessionId,
+                redirectTarget: '_self'
+            });
         } catch (err) {
             const message = err?.message || 'Payment initiation failed';
             if (err instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
@@ -197,7 +176,7 @@ export default function PaymentPage() {
                 </button>
 
                 <p className="mt-6 text-gray-500 text-xs text-center">
-                    Secured by Razorpay • Safe & Encrypted Payment
+                    Secured by Cashfree • Safe & Encrypted Payment
                 </p>
             </div>
         </div>

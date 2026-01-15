@@ -46,7 +46,7 @@ export default function Page() {
             <div>
               <h2 className="mb-2 font-bold text-purple-400 text-2xl">Venue</h2>
               <p className="text-xl leading-relaxed">
-                SVERI's College of Engineering  (An Autonomous Institute),<br />
+                SVERI&apos;s College of Engineering  (An Autonomous Institute),<br />
                 Pandharpur, Maharashtra
               </p>
             </div>

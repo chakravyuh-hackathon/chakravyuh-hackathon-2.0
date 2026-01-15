@@ -59,6 +59,54 @@ export default function Footer() {
                 — Chakravyuh 2.0 Rule Book
               </a>
             </li>
+            <li>
+              <a
+                href="/pricing"
+                className="block hover:pl-2 hover:text-white transition-all duration-300"
+              >
+                — Pricing / Registration Fee
+              </a>
+            </li>
+            <li>
+              <a
+                href="/privacy-policy"
+                className="block hover:pl-2 hover:text-white transition-all duration-300"
+              >
+                — Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a
+                href="/refund-cancellation"
+                className="block hover:pl-2 hover:text-white transition-all duration-300"
+              >
+                — Refund & Cancellation
+              </a>
+            </li>
+            <li>
+              <a
+                href="/terms-and-conditions"
+                className="block hover:pl-2 hover:text-white transition-all duration-300"
+              >
+                — Terms & Conditions
+              </a>
+            </li>
+            <li>
+              <a
+                href="/about-us"
+                className="block hover:pl-2 hover:text-white transition-all duration-300"
+              >
+                — About Us
+              </a>
+            </li>
+            <li>
+              <a
+                href="/contact-us"
+                className="block hover:pl-2 hover:text-white transition-all duration-300"
+              >
+                — Contact Us
+              </a>
+            </li>
           </ul>
         </div>
 

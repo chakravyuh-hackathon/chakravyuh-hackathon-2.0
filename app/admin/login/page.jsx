@@ -63,7 +63,7 @@ function AdminLoginContent() {
                 <div className="mb-6">
                     <h1 className="font-extrabold text-2xl">Admin Login</h1>
                     <p className="mt-1 text-gray-400 text-sm">
-                       Only Login for Admin's
+                       Only Login for Admin&apos;s
                     </p>
                 </div>
 

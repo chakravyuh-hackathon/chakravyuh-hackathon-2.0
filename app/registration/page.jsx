@@ -3,10 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-const loadRazorpayScript = () => {
+const loadCashfreeScript = () => {
     return new Promise((resolve) => {
         const script = document.createElement('script');
-        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
         script.onload = () => resolve(true);
         script.onerror = () => resolve(false);
         document.head.appendChild(script);
@@ -15,7 +15,7 @@ const loadRazorpayScript = () => {
 
 export default function RegistrationPage() {
     const router = useRouter();
-    const razorpayScriptPromiseRef = useRef(null);
+    const cashfreeScriptPromiseRef = useRef(null);
     const API_URL = useMemo(() => {
         return '/api';
     }, []);
@@ -38,8 +38,8 @@ export default function RegistrationPage() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if (!razorpayScriptPromiseRef.current) {
-            razorpayScriptPromiseRef.current = loadRazorpayScript();
+        if (!cashfreeScriptPromiseRef.current) {
+            cashfreeScriptPromiseRef.current = loadCashfreeScript();
         }
     }, []);
 
@@ -134,8 +134,8 @@ export default function RegistrationPage() {
         setError('');
 
         try {
-            if (!razorpayScriptPromiseRef.current) {
-                razorpayScriptPromiseRef.current = loadRazorpayScript();
+            if (!cashfreeScriptPromiseRef.current) {
+                cashfreeScriptPromiseRef.current = loadCashfreeScript();
             }
 
             // 1. Submit registration
@@ -187,51 +187,23 @@ export default function RegistrationPage() {
 
             const orderData = await orderResponse.json();
 
-            // 3. Load Razorpay script
-            const isLoaded = await razorpayScriptPromiseRef.current;
+            // 3. Load Cashfree script
+            const isLoaded = await cashfreeScriptPromiseRef.current;
             if (!isLoaded) {
-                throw new Error('Razorpay SDK failed to load. Are you online?');
+                throw new Error('Cashfree SDK failed to load. Are you online?');
             }
 
-            // 4. Open Razorpay checkout
-            const options = {
-                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_Rr3WacPY4q7Wdr',
-                amount: orderData.order.amount,
-                currency: orderData.order.currency,
-                name: 'Chakravyuh 2.0',
-                description: `Registration for ${formData.event}`,
-                order_id: orderData.order.id,
-                handler: async function (response) {
-                    router.replace(`/registration/success?id=${regData.data._id}&verifying=1`);
+            if (!orderData.paymentSessionId) {
+                throw new Error('Missing Cashfree payment session id');
+            }
 
-                    fetch(`${API_URL}/registrations/${regData.data._id}/verify-payment`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            razorpay_payment_id: response.razorpay_payment_id,
-                            razorpay_order_id: response.razorpay_order_id,
-                            razorpay_signature: response.razorpay_signature
-                        }),
-                        keepalive: true
-                    }).catch((error) => {
-                        console.error('Payment verification error:', error);
-                    });
-                },
-                prefill: {
-                    name: formData.fullName,
-                    email: formData.email,
-                    contact: formData.phone
-                },
-                theme: {
-                    color: '#4a6cf7'
-                }
-            };
+            const mode = (process.env.NEXT_PUBLIC_CASHFREE_MODE || 'sandbox').toString();
+            const cashfree = window.Cashfree({ mode });
 
-            const rzp = new window.Razorpay(options);
-            rzp.open();
-
-            rzp.on('payment.failed', function (response) {
-                setError(`Payment failed: ${response.error.description}`);
+            // 4. Open Cashfree checkout
+            cashfree.checkout({
+                paymentSessionId: orderData.paymentSessionId,
+                redirectTarget: '_self'
             });
 
         } catch (error) {
@@ -274,6 +246,43 @@ export default function RegistrationPage() {
                         </div>
                         <h1 className="bg-clip-text bg-linear-to-r from-gray-900 dark:from-gray-100 to-gray-700 dark:to-gray-300 mb-1.5 font-bold text-transparent text-3xl">Register for Chakravyuh 2.0</h1>
                         <p className="mx-auto max-w-md text-gray-600 dark:text-gray-300 text-sm leading-relaxed">Join the ultimate tech fest and showcase your skills in coding, debugging, and problem-solving</p>
+                    </div>
+
+                    <div className="bg-gray-50 dark:bg-gray-950/40 mb-8 p-5 border border-gray-200 dark:border-gray-800 rounded-xl">
+                        <div className="font-bold text-gray-900 dark:text-gray-100 text-sm uppercase tracking-wider">Registration Fee &amp; What You Get</div>
+
+                        <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 mt-4">
+                            <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800 rounded-lg">
+                                <div className="text-gray-600 dark:text-gray-300 text-xs">IEEE Member Fee</div>
+                                <div className="mt-1 font-extrabold text-gray-900 dark:text-gray-100 text-xl">₹811.86</div>
+                            </div>
+                            <div className="bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800 rounded-lg">
+                                <div className="text-gray-600 dark:text-gray-300 text-xs">Non-IEEE Member Fee</div>
+                                <div className="mt-1 font-extrabold text-gray-900 dark:text-gray-100 text-xl">₹1,013.86</div>
+                            </div>
+                        </div>
+
+                        <p className="mt-4 font-semibold text-gray-900 dark:text-gray-100 text-sm">
+                            Registration fee is for event participation only.
+                        </p>
+
+                        <ul className="space-y-1.5 mt-3 text-gray-700 dark:text-gray-300 text-sm list-disc list-inside">
+                            <li>Access to the hackathon</li>
+                            <li>Certificates (as applicable)</li>
+                            <li>Mentorship during the event</li>
+                            <li>Eligibility for prizes (as per judging rules)</li>
+                        </ul>
+
+                        <div className="mt-4 text-gray-600 dark:text-gray-300 text-sm">
+                            Links:
+                            <a href="/pricing" className="ml-2 text-blue-600 dark:text-blue-400 hover:underline">Pricing</a>
+                            <span className="mx-2 text-gray-400">|</span>
+                            <a href="/privacy-policy" className="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a>
+                            <span className="mx-2 text-gray-400">|</span>
+                            <a href="/refund-cancellation" className="text-blue-600 dark:text-blue-400 hover:underline">Refund &amp; Cancellation</a>
+                            <span className="mx-2 text-gray-400">|</span>
+                            <a href="/terms-and-conditions" className="text-blue-600 dark:text-blue-400 hover:underline">Terms</a>
+                        </div>
                     </div>
 
                     {error && (

@@ -12,6 +12,13 @@ function SuccessContent() {
     const registrationId = searchParams.get('id');
     const verifying = searchParams.get('verifying') === '1';
 
+    const API_URL = (() => {
+        const raw = (process.env.NEXT_PUBLIC_API_URL || '').toString().trim();
+        if (!raw) return '/api';
+        const trimmed = raw.endsWith('/') ? raw.slice(0, -1) : raw;
+        return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+    })();
+
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -27,10 +34,36 @@ function SuccessContent() {
         let pollTimer;
         let attempts = 0;
 
+        const triggerVerification = async () => {
+            if (!verifying) return;
+            const verifyResponse = await fetch(`${API_URL}/registrations/${registrationId}/verify-payment`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({}),
+                keepalive: true
+            });
+
+            let verifyData = null;
+            try {
+                verifyData = await verifyResponse.json();
+            } catch {
+                verifyData = null;
+            }
+
+            if (!verifyResponse.ok && verifyResponse.status !== 400) {
+                const message =
+                    verifyData?.message ||
+                    (typeof verifyData === 'string' ? verifyData : '') ||
+                    'Payment verification failed';
+                const cashfreeHint = verifyData?.cashfree
+                    ? ` (Cashfree: ${JSON.stringify(verifyData.cashfree)})`
+                    : '';
+                throw new Error(`${message}${cashfreeHint}`);
+            }
+        };
+
         const fetchRegistration = async () => {
             try {
-                const API_URL = '/api';
-
                 const response = await fetch(
                     `${API_URL}/registrations/${registrationId}`
                 );
@@ -43,15 +76,22 @@ function SuccessContent() {
                 if (isCancelled) return;
 
                 if (verifying && result.data?.status !== 'confirmed') {
+                    try {
+                        await triggerVerification();
+                    } catch (err) {
+                        setError(err?.message || 'Payment verification failed');
+                        setLoading(false);
+                        return;
+                    }
                     attempts += 1;
-                    if (attempts >= 15) {
+                    if (attempts >= 60) {
                         setError('Payment verification is taking too long. Please refresh this page.');
                         setLoading(false);
                         return;
                     }
 
                     setLoading(true);
-                    pollTimer = setTimeout(fetchRegistration, 1000);
+                    pollTimer = setTimeout(fetchRegistration, 2000);
                     return;
                 }
 
@@ -64,7 +104,9 @@ function SuccessContent() {
             }
         };
 
-        fetchRegistration();
+        triggerVerification().finally(() => {
+            fetchRegistration();
+        });
 
         return () => {
             isCancelled = true;
@@ -238,7 +280,7 @@ function SuccessContent() {
                     Registration Confirmed!
                 </h1>
                 <p className="mb-6 text-gray-600">
-                    You're successfully registered for Chakravyuh 2.0
+                    You&apos;re successfully registered for Chakravyuh 2.0
                 </p>
 
                 <div className="bg-gray-50 mb-6 p-6 border rounded-xl">

@@ -183,7 +183,7 @@ export default function Tracks() {
 
               {/* BACK */}
               <div className="absolute inset-0 flex justify-center items-center bg-linear-to-br from-purple-900 to-black backdrop-blur-2xl px-8 border border-purple-500/40 rounded-4xl text-center" style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }}>
-                <p className="font-medium text-purple-50 text-sm sm:text-base italic leading-relaxed select-none">"{item.info}"</p>
+                <p className="font-medium text-purple-50 text-sm sm:text-base italic leading-relaxed select-none">&quot;{item.info}&quot;</p>
               </div>
             </div>
           </div>

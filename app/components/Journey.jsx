@@ -6,6 +6,29 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const StatNode = ({ title, subtitle, position }) => (
+  <div className={`absolute flex items-center justify-center z-50 animate-reverse-spin ${position}`}>
+    <div className="relative flex flex-col justify-center items-center py-1 sm:py-2 min-w-[90px] sm:min-w-[120px] md:min-w-[140px]">
+      <div className="-z-10 absolute inset-0 flex flex-col justify-center items-center opacity-60">
+        <div className="bg-zinc-800 blur-[1px] mb-px rounded-full w-[55%] h-[6px] sm:h-[8px]" />
+        <div className="bg-zinc-700 blur-[1px] mb-px rounded-full w-[80%] h-[8px] sm:h-[10px]" />
+        <div className="bg-zinc-600 blur-[1px] rounded-full w-full h-[10px] sm:h-[14px]" />
+        <div className="bg-zinc-700 blur-[1px] mt-px rounded-full w-[75%] h-[8px] sm:h-[10px]" />
+        <div className="bg-zinc-800 blur-[1px] mt-px rounded-full w-[50%] h-[6px] sm:h-[8px]" />
+      </div>
+
+      <div className="px-2 sm:px-3 text-center">
+        <h2 className="font-bold text-white text-xl sm:text-2xl md:text-3xl leading-none">
+          {title}
+        </h2>
+        <p className="mt-1 font-medium text-[9px] text-white sm:text-[11px] md:text-[13px] whitespace-nowrap">
+          {subtitle}
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
 const Journey = () => {
   const sectionRef = useRef(null);
   const orbitsRef = useRef([]);
@@ -66,29 +89,6 @@ const Journey = () => {
       );
     }
   }, []);
-
-  const StatNode = ({ title, subtitle, position }) => (
-    <div className={`absolute flex items-center justify-center z-50 animate-reverse-spin ${position}`}>
-      <div className="relative flex flex-col justify-center items-center py-1 sm:py-2 min-w-[90px] sm:min-w-[120px] md:min-w-[140px]">
-        <div className="-z-10 absolute inset-0 flex flex-col justify-center items-center opacity-60">
-          <div className="bg-zinc-800 blur-[1px] mb-px rounded-full w-[55%] h-[6px] sm:h-[8px]" />
-          <div className="bg-zinc-700 blur-[1px] mb-px rounded-full w-[80%] h-[8px] sm:h-[10px]" />
-          <div className="bg-zinc-600 blur-[1px] rounded-full w-full h-[10px] sm:h-[14px]" />
-          <div className="bg-zinc-700 blur-[1px] mt-px rounded-full w-[75%] h-[8px] sm:h-[10px]" />
-          <div className="bg-zinc-800 blur-[1px] mt-px rounded-full w-[50%] h-[6px] sm:h-[8px]" />
-        </div>
-
-        <div className="px-2 sm:px-3 text-center">
-          <h2 className="font-bold text-white text-xl sm:text-2xl md:text-3xl leading-none">
-            {title}
-          </h2>
-          <p className="mt-1 font-medium text-[9px] text-white sm:text-[11px] md:text-[13px] whitespace-nowrap">
-            {subtitle}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <section
