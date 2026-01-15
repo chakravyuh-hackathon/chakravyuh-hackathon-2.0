@@ -12,12 +12,7 @@ function SuccessContent() {
     const registrationId = searchParams.get('id');
     const verifying = searchParams.get('verifying') === '1';
 
-    const API_URL = (() => {
-        const raw = (process.env.NEXT_PUBLIC_API_URL || '').toString().trim();
-        if (!raw) return '/api';
-        const trimmed = raw.endsWith('/') ? raw.slice(0, -1) : raw;
-        return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
-    })();
+    const API_URL = '/api';
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);

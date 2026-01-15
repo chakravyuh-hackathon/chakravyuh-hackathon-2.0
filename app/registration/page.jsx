@@ -199,11 +199,16 @@ export default function RegistrationPage() {
 
             const mode = (process.env.NEXT_PUBLIC_CASHFREE_MODE || 'sandbox').toString();
             const cashfree = window.Cashfree({ mode });
+            const origin = window.location.origin || '';
+            const returnUrl = `${origin}/registration/success?id=${encodeURIComponent(
+                regData.data._id
+            )}&verifying=1&order_id={order_id}`;
 
             // 4. Open Cashfree checkout
             cashfree.checkout({
                 paymentSessionId: orderData.paymentSessionId,
-                redirectTarget: '_self'
+                redirectTarget: '_self',
+                returnUrl
             });
 
         } catch (error) {
