@@ -2,8 +2,6 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import ExcelJS from 'exceljs';
-import { saveAs } from 'file-saver';
 
 export default function IeeeCertificatesPage() {
     const router = useRouter();
@@ -28,6 +26,144 @@ export default function IeeeCertificatesPage() {
     const [certificateLoading, setCertificateLoading] = useState(false);
     const [certificateError, setCertificateError] = useState('');
 
+    const [paymentBlobUrl, setPaymentBlobUrl] = useState('');
+    const [paymentLoading, setPaymentLoading] = useState(false);
+    const [paymentError, setPaymentError] = useState('');
+
+    const [approveLoading, setApproveLoading] = useState(false);
+    const [approveError, setApproveError] = useState('');
+    const [approveSuccess, setApproveSuccess] = useState('');
+
+    const downloadExcel = async () => {
+        try {
+            if (!Array.isArray(visibleRows) || visibleRows.length === 0) return;
+
+            const excelMod = await import('exceljs');
+            const fileSaverMod = await import('file-saver');
+
+            const ExcelJS = excelMod?.default || excelMod;
+            const saveAs = fileSaverMod?.saveAs || fileSaverMod?.default;
+
+            const workbook = new ExcelJS.Workbook();
+
+            const addSheet = async (sheetName, data, includeQr) => {
+                const ws = workbook.addWorksheet(sheetName);
+                const maxExtraMembers = Math.max(
+                    0,
+                    ...data.map((r) => (Array.isArray(r?.teamMembers) ? r.teamMembers.length : 0))
+                );
+
+                const columns = [
+                    { header: 'REGISTRATION ID', key: 'registrationId', width: 22 },
+                    { header: 'STATUS', key: 'status', width: 14 },
+                    { header: 'PAYMENT STATUS', key: 'paymentStatus', width: 16 },
+                    { header: 'AMOUNT', key: 'amount', width: 10 },
+                    { header: 'EVENT', key: 'event', width: 16 },
+                    { header: 'TYPE', key: 'type', width: 12 },
+                    { header: 'TEAM NAME', key: 'teamName', width: 22 },
+                    { header: 'LEADER NAME', key: 'fullName', width: 22 },
+                    { header: 'LEADER EMAIL', key: 'email', width: 28 },
+                    { header: 'LEADER PHONE', key: 'phone', width: 16 },
+                    { header: 'COLLEGE', key: 'college', width: 30 },
+                    { header: 'IEEE MEMBER', key: 'ieeeMember', width: 14 },
+                    { header: 'IEEE ID', key: 'ieeeId', width: 16 }
+                ];
+
+                if (includeQr) {
+                    columns.push({ header: 'QR (SCAN)', key: 'qr', width: 22 });
+                }
+
+                for (let i = 0; i < maxExtraMembers; i++) {
+                    const memberNo = i + 2;
+                    columns.push(
+                        { header: `MEMBER ${memberNo} NAME`, key: `m${memberNo}Name`, width: 20 },
+                        { header: `MEMBER ${memberNo} EMAIL`, key: `m${memberNo}Email`, width: 26 },
+                        { header: `MEMBER ${memberNo} PHONE`, key: `m${memberNo}Phone`, width: 18 }
+                    );
+                }
+
+                ws.columns = columns;
+
+                ws.getRow(1).font = { bold: true };
+                ws.getRow(1).alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+                ws.getRow(1).height = 22;
+
+                for (let i = 0; i < data.length; i++) {
+                    const r = data[i];
+                    const members = Array.isArray(r?.teamMembers) ? r.teamMembers : [];
+                    const memberMap = {};
+                    members.forEach((m, idx) => {
+                        const memberNo = idx + 2;
+                        memberMap[`m${memberNo}Name`] = m?.name || '';
+                        memberMap[`m${memberNo}Email`] = m?.email || '';
+                        memberMap[`m${memberNo}Phone`] = m?.phone || '';
+                    });
+
+                    const row = ws.addRow({
+                        registrationId: r?.registrationId || '',
+                        status: r?.status || '',
+                        paymentStatus: r?.payment?.status || '',
+                        amount: r?.payment?.amount || '',
+                        event: r?.event || '',
+                        type: r?.isTeam ? 'Team' : 'Individual',
+                        teamName: r?.teamName || '',
+                        fullName: r?.fullName || '',
+                        email: r?.email || '',
+                        phone: r?.phone || '',
+                        college: r?.college || '',
+                        ieeeMember: r?.ieeeMember || '',
+                        ieeeId: r?.ieeeId || '',
+                        ...memberMap
+                    });
+
+                    row.alignment = { vertical: 'middle', horizontal: 'left', wrapText: true };
+
+                    if (includeQr && r?.qrCode && typeof r.qrCode === 'string') {
+                        try {
+                            const base64 = r.qrCode.includes('base64,')
+                                ? r.qrCode.split('base64,')[1]
+                                : r.qrCode;
+                            const imgId = workbook.addImage({ base64, extension: 'png' });
+
+                            const qrColIndex = columns.findIndex((c) => c.key === 'qr');
+                            if (qrColIndex >= 0) {
+                                row.height = 95;
+                                ws.addImage(imgId, {
+                                    tl: { col: qrColIndex + 0.1, row: i + 1.15 },
+                                    ext: { width: 90, height: 90 }
+                                });
+                            }
+                        } catch {
+                            // ignore QR embed failures
+                        }
+                    }
+                }
+            };
+
+            const confirmedRows = visibleRows.filter(
+                (r) => (r?.status || '').toString().toLowerCase() === 'confirmed'
+            );
+
+            if (confirmedRows.length > 0) {
+                await addSheet('CONFIRMED (QR)', confirmedRows, true);
+            }
+
+            await addSheet('ALL REGISTRATIONS', visibleRows, false);
+
+            const buffer = await workbook.xlsx.writeBuffer();
+            const blob = new Blob([buffer], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            });
+
+            if (typeof saveAs === 'function') {
+                saveAs(blob, `registrations_${Date.now()}.xlsx`);
+            }
+        } catch (e) {
+            const message = e?.message || 'Failed to export Excel';
+            setError(message);
+        }
+    };
+
     useEffect(() => {
         try {
             const t = localStorage.getItem('adminToken') || '';
@@ -40,6 +176,46 @@ export default function IeeeCertificatesPage() {
             setAuthChecked(true);
         }
     }, [router]);
+
+    useEffect(() => {
+        const fetchRows = async () => {
+            if (!token) return;
+            try {
+                setLoading(true);
+                setError('');
+
+                const res = await fetch(`${API_URL}/admin/registrations`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                const json = await res.json().catch(() => null);
+
+                if (res.status === 401 || res.status === 403) {
+                    localStorage.removeItem('adminToken');
+                    router.replace(`/admin/login?next=${encodeURIComponent('/registration/ieeecertificate')}`);
+                    return;
+                }
+
+                if (!res.ok || !json?.success) {
+                    throw new Error(json?.message || 'Failed to fetch registrations');
+                }
+
+                setRows(Array.isArray(json?.data) ? json.data : []);
+            } catch (e) {
+                const message = e?.message || 'Failed to fetch registrations';
+                if (e instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
+                    setError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
+                } else {
+                    setError(message);
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRows();
+    }, [API_URL, router, token]);
 
     const filteredRows = useMemo(() => {
         const q = (search || '').trim().toLowerCase();
@@ -56,7 +232,7 @@ export default function IeeeCertificatesPage() {
                 r?.ieeeId
             ]
                 .filter(Boolean)
-                .map(v => String(v).toLowerCase())
+                .map((v) => String(v).toLowerCase())
                 .join(' | ');
 
             return haystack.includes(q);
@@ -85,16 +261,39 @@ export default function IeeeCertificatesPage() {
         return { total: filteredRows.length, ieee, nonIeee };
     }, [filteredRows]);
 
+    const selected = useMemo(() => {
+        if (!selectedId) return null;
+        return visibleRows.find((r) => String(r._id) === String(selectedId)) || null;
+    }, [selectedId, visibleRows]);
+
+    const previewRecord = selectedDetails || selected;
+
+    const hasPreviewCertificate = useMemo(() => {
+        if (!previewRecord) return false;
+        if (typeof previewRecord.hasIeeeCertificate !== 'undefined') return Boolean(previewRecord.hasIeeeCertificate);
+        const isIeeeYes = (previewRecord.ieeeMember || 'no').toString().toLowerCase() === 'yes';
+        const cert = previewRecord.ieeeMembershipCertificate;
+        return Boolean(isIeeeYes && cert && (cert.contentType || cert.fileName));
+    }, [previewRecord]);
+
+    const hasPreviewPaymentProof = useMemo(() => {
+        if (!previewRecord) return false;
+        const utr = previewRecord?.payment?.utrNumber || previewRecord?.utrNumber;
+        const screenshotMeta = previewRecord?.payment?.screenshot || previewRecord?.paymentScreenshot;
+        return Boolean(utr || screenshotMeta?.contentType || screenshotMeta?.fileName);
+    }, [previewRecord]);
+
     useEffect(() => {
         if (!selectedId) return;
-        const stillExists = visibleRows.some(r => String(r._id) === String(selectedId));
+        const stillExists = visibleRows.some((r) => String(r._id) === String(selectedId));
         if (!stillExists) {
             setSelectedId('');
             setSelectedDetails(null);
             setDetailsError('');
             setDetailsLoading(false);
+            setPreviewTab('details');
         }
-    }, [visibleRows, selectedId]);
+    }, [selectedId, visibleRows]);
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -114,14 +313,15 @@ export default function IeeeCertificatesPage() {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                const json = await res.json();
+                const json = await res.json().catch(() => null);
+
+                if (res.status === 401 || res.status === 403) {
+                    localStorage.removeItem('adminToken');
+                    router.replace(`/admin/login?next=${encodeURIComponent('/registration/ieeecertificate')}`);
+                    return;
+                }
 
                 if (!res.ok || !json?.success) {
-                    if (res.status === 401 || res.status === 403) {
-                        localStorage.removeItem('adminToken');
-                        router.replace(`/admin/login?next=${encodeURIComponent('/registration/ieeecertificate')}`);
-                        return;
-                    }
                     throw new Error(json?.message || 'Failed to fetch registration details');
                 }
 
@@ -142,159 +342,19 @@ export default function IeeeCertificatesPage() {
         fetchDetails();
     }, [API_URL, router, selectedId, token]);
 
-       // --- EXCEL LOGIC (QR Code Embedded) ---
-    const downloadExcel = async () => {
-        const workbook = new ExcelJS.Workbook();
-        
-        const generateSheet = async (rowsToExport, sheetName) => {
-            const worksheet = workbook.addWorksheet(sheetName);
-            const maxTeamMembers = Math.max(0, ...rowsToExport.map((r) => 
-                Array.isArray(r?.teamMembers) ? r.teamMembers.length : 0
-            ));
-
-            const columns = [
-                { header: 'Registration ID', key: 'registrationId', width: 20 },
-                { header: 'Full Name', key: 'fullName', width: 25 },
-                { header: 'Email', key: 'email', width: 30 },
-                { header: 'Phone', key: 'phone', width: 15 },
-                { header: 'College', key: 'college', width: 30 },
-                { header: 'Event', key: 'event', width: 20 },
-                { header: 'IEEE Member', key: 'ieeeMember', width: 12 },
-                { header: 'IEEE ID', key: 'ieeeId', width: 15 },
-                { header: 'Team Name', key: 'teamName', width: 25 },
-                { header: 'QR IMAGE (For ID Card)', key: 'qrCode', width: 25 }, 
-            ];
-
-            for (let i = 0; i < maxTeamMembers; i++) {
-                columns.push(
-                    { header: `M${i + 2} Name`, key: `m${i}Name`, width: 20 },
-                    { header: `M${i + 2} Email`, key: `m${i}Email`, width: 25 }
-                );
-            }
-            worksheet.columns = columns;
-
-            for (let i = 0; i < rowsToExport.length; i++) {
-                const r = rowsToExport[i];
-                const members = Array.isArray(r?.teamMembers) ? r.teamMembers : [];
-                const memberFields = {};
-                members.forEach((m, idx) => {
-                    memberFields[`m${idx}Name`] = m?.name;
-                    memberFields[`m${idx}Email`] = m?.email;
-                });
-
-                const currentRow = worksheet.addRow({
-                    registrationId: r?.registrationId,
-                    fullName: r?.fullName,
-                    email: r?.email,
-                    phone: r?.phone,
-                    college: r?.college,
-                    event: r?.event,
-                    ieeeMember: r?.ieeeMember,
-                    ieeeId: r?.ieeeId,
-                    teamName: r?.teamName,
-                    ...memberFields
-                });
-
-                currentRow.height = 100; // Large height for scannable QR
-                currentRow.alignment = { vertical: 'middle', horizontal: 'left' };
-
-                if (r?.qrCode) {
-                    try {
-                        const base64Data = r.qrCode.split('base64,')[1] || r.qrCode;
-                        const imageId = workbook.addImage({ base64: base64Data, extension: 'png' });
-                        worksheet.addImage(imageId, {
-                            tl: { col: 9.1, row: i + 1.1 },
-                            ext: { width: 120, height: 120 }
-                        });
-                    } catch (err) { console.error("Img error", err); }
-                }
-            }
-            worksheet.getRow(1).font = { bold: true };
-        };
-
-        const ieeeRows = filteredRows.filter(r => (r?.ieeeMember || 'no').toLowerCase() === 'yes');
-        const nonIeeeRows = filteredRows.filter(r => (r?.ieeeMember || 'no').toLowerCase() !== 'yes');
-
-        if (ieeeRows.length > 0) await generateSheet(ieeeRows, 'IEEE Members');
-        if (nonIeeeRows.length > 0) await generateSheet(nonIeeeRows, 'Non-IEEE Members');
-
-        const buffer = await workbook.xlsx.writeBuffer();
-        saveAs(new Blob([buffer]), `Final_Registrations_${new Date().getTime()}.xlsx`);
-    };
-
-    useEffect(() => {
-        const fetchRows = async () => {
-            try {
-                setLoading(true);
-                setError('');
-
-                if (!token) return;
-
-                const res = await fetch(`${API_URL}/admin/registrations`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                const json = await res.json();
-
-                if (!res.ok || !json?.success) {
-                    if (res.status === 401 || res.status === 403) {
-                        localStorage.removeItem('adminToken');
-                        router.replace(`/admin/login?next=${encodeURIComponent('/registration/ieeecertificate')}`);
-                        return;
-                    }
-                    throw new Error(json?.message || 'Failed to fetch registrations');
-                }
-
-                setRows(Array.isArray(json.data) ? json.data : []);
-            } catch (e) {
-                const message = e?.message || 'Failed to fetch registrations';
-                if (e instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
-                    setError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
-                } else {
-                    setError(message);
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchRows();
-    }, [API_URL, router, token]);
-
-    const selected = useMemo(() => {
-        if (!selectedId) return null;
-        return visibleRows.find(r => String(r._id) === String(selectedId)) || null;
-    }, [visibleRows, selectedId]);
-
-    const previewRecord = selectedDetails || selected;
-
-    const hasPreviewCertificate = useMemo(() => {
-        if (!previewRecord) return false;
-        if (typeof previewRecord.hasIeeeCertificate !== 'undefined') return Boolean(previewRecord.hasIeeeCertificate);
-        const isIeeeYes = (previewRecord.ieeeMember || 'no').toString().toLowerCase() === 'yes';
-        const certMeta = previewRecord.ieeeMembershipCertificate;
-        return Boolean(isIeeeYes && certMeta && (certMeta.contentType || certMeta.fileName));
-    }, [previewRecord]);
-
-    useEffect(() => {
-        if (!previewRecord) {
-            setPreviewTab('details');
-            return;
-        }
-        if (hasPreviewCertificate) {
-            setPreviewTab('certificate');
-            return;
-        }
-        setPreviewTab('details');
-    }, [hasPreviewCertificate, previewRecord]);
-
     useEffect(() => {
         if (!certificateBlobUrl) return;
         return () => {
             URL.revokeObjectURL(certificateBlobUrl);
         };
     }, [certificateBlobUrl]);
+
+    useEffect(() => {
+        if (!paymentBlobUrl) return;
+        return () => {
+            URL.revokeObjectURL(paymentBlobUrl);
+        };
+    }, [paymentBlobUrl]);
 
     useEffect(() => {
         const fetchCertificate = async () => {
@@ -347,6 +407,57 @@ export default function IeeeCertificatesPage() {
         fetchCertificate();
     }, [API_URL, hasPreviewCertificate, previewRecord, previewTab, router, token]);
 
+    useEffect(() => {
+        const fetchPaymentProof = async () => {
+            setPaymentError('');
+
+            if (!token || !previewRecord || !hasPreviewPaymentProof || previewTab !== 'payment') {
+                setPaymentLoading(false);
+                setPaymentError('');
+                setPaymentBlobUrl('');
+                return;
+            }
+
+            try {
+                setPaymentLoading(true);
+                setPaymentError('');
+                setPaymentBlobUrl('');
+
+                const res = await fetch(`${API_URL}/registrations/${previewRecord._id}/payment-screenshot`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (!res.ok) {
+                    if (res.status === 401 || res.status === 403) {
+                        localStorage.removeItem('adminToken');
+                        router.replace(`/admin/login?next=${encodeURIComponent('/registration/ieeecertificate')}`);
+                        return;
+                    }
+                    const json = await res.json().catch(() => null);
+                    throw new Error(json?.message || 'Failed to fetch payment proof');
+                }
+
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob);
+                setPaymentBlobUrl(url);
+            } catch (e) {
+                setPaymentBlobUrl('');
+                const message = e?.message || 'Failed to fetch payment proof';
+                if (e instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
+                    setPaymentError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
+                } else {
+                    setPaymentError(message);
+                }
+            } finally {
+                setPaymentLoading(false);
+            }
+        };
+
+        fetchPaymentProof();
+    }, [API_URL, hasPreviewPaymentProof, previewRecord, previewTab, router, token]);
+
     const renderValue = (value) => {
         if (value === null || value === undefined || value === '') return '-';
         if (typeof value === 'boolean') return value ? 'Yes' : 'No';
@@ -367,12 +478,116 @@ export default function IeeeCertificatesPage() {
         </div>
     );
 
+    const refreshRowInState = (id, patch) => {
+        setRows((prev) =>
+            Array.isArray(prev)
+                ? prev.map((r) => (String(r?._id) === String(id) ? { ...r, ...patch } : r))
+                : prev
+        );
+        setSelectedDetails((prev) => {
+            if (!prev || String(prev?._id) !== String(id)) return prev;
+            return { ...prev, ...patch };
+        });
+    };
+
+    const handleFinalApprove = async () => {
+        try {
+            setApproveLoading(true);
+            setApproveError('');
+            setApproveSuccess('');
+
+            if (!token) {
+                router.replace(`/admin/login?next=${encodeURIComponent('/registration/ieeecertificate')}`);
+                return;
+            }
+
+            if (!previewRecord?._id) {
+                throw new Error('No registration selected');
+            }
+
+            const res = await fetch(`${API_URL}/registrations/${previewRecord._id}/final-approve`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const json = await res.json().catch(() => null);
+            if (!res.ok || !json?.success) {
+                if (res.status === 401 || res.status === 403) {
+                    localStorage.removeItem('adminToken');
+                    router.replace(`/admin/login?next=${encodeURIComponent('/registration/ieeecertificate')}`);
+                    return;
+                }
+                throw new Error(json?.message || 'Failed to approve payment');
+            }
+
+            refreshRowInState(previewRecord._id, {
+                status: 'confirmed',
+                payment: {
+                    ...(previewRecord.payment || {}),
+                    status: 'captured'
+                },
+                qrCode: json?.data?.qrCode || previewRecord.qrCode
+            });
+
+            const emailQueued = Boolean(json?.data?.emailQueued);
+            const emailRecipients = Number(json?.data?.emailRecipients || 0);
+            if (emailQueued && emailRecipients > 0) {
+                setApproveSuccess(
+                    `Payment confirmed successfully. Confirmation email queued for ${emailRecipients} recipient(s).`
+                );
+            } else {
+                setApproveSuccess('Payment confirmed successfully. Email not queued (EMAIL_USER/EMAIL_PASS not configured).');
+            }
+        } catch (e) {
+            const message = e?.message || 'Failed to approve payment';
+            if (e instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
+                setApproveError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
+            } else {
+                setApproveError(message);
+            }
+        } finally {
+            setApproveLoading(false);
+        }
+    };
+
     if (!authChecked) {
         return (
             <div className="bg-linear-to-r from-[#0f172a] via-[#020617] to-black p-6 min-h-screen text-white">
                 <div className="mx-auto max-w-7xl">
-                    <div className="bg-white/5 shadow-xl backdrop-blur-xl p-6 border border-white/10 rounded-2xl">
-                        Loading...
+                    <div className="flex md:flex-row flex-col md:justify-between md:items-end gap-4 mb-8">
+                        <div>
+                            <h1 className="bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 font-extrabold text-transparent text-3xl">
+                                Registrations
+                            </h1>
+                            <p className="text-gray-400 text-sm">Loading admin session...</p>
+                        </div>
+                    </div>
+
+                    <div className="gap-6 grid grid-cols-1 lg:grid-cols-2">
+                        <div className="bg-white/5 shadow-2xl backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+                            <div className="p-4 border-white/10 border-b">
+                                <div className="bg-white/10 rounded-xl w-40 h-6" />
+                                <div className="bg-white/10 mt-3 rounded-xl w-24 h-4" />
+                            </div>
+                            <div className="space-y-3 p-4">
+                                <div className="bg-white/10 rounded-xl h-14" />
+                                <div className="bg-white/10 rounded-xl h-14" />
+                                <div className="bg-white/10 rounded-xl h-14" />
+                                <div className="bg-white/10 rounded-xl h-14" />
+                            </div>
+                        </div>
+
+                        <div className="bg-white/5 shadow-2xl backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+                            <div className="p-4 border-white/10 border-b">
+                                <div className="bg-white/10 rounded-xl w-28 h-6" />
+                                <div className="bg-white/10 mt-3 rounded-xl w-60 h-4" />
+                            </div>
+                            <div className="p-4">
+                                <div className="bg-white/10 rounded-2xl h-[62vh]" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -394,8 +609,29 @@ export default function IeeeCertificatesPage() {
                 </div>
 
                 {loading && (
-                    <div className="bg-white/5 shadow-xl backdrop-blur-xl p-6 border border-white/10 rounded-2xl">
-                        Loading...
+                    <div className="gap-6 grid grid-cols-1 lg:grid-cols-2">
+                        <div className="bg-white/5 shadow-2xl backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+                            <div className="p-4 border-white/10 border-b">
+                                <div className="bg-white/10 rounded-xl w-40 h-6" />
+                                <div className="bg-white/10 mt-3 rounded-xl w-24 h-4" />
+                            </div>
+                            <div className="space-y-3 p-4">
+                                <div className="bg-white/10 rounded-xl h-14" />
+                                <div className="bg-white/10 rounded-xl h-14" />
+                                <div className="bg-white/10 rounded-xl h-14" />
+                                <div className="bg-white/10 rounded-xl h-14" />
+                            </div>
+                        </div>
+
+                        <div className="bg-white/5 shadow-2xl backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+                            <div className="p-4 border-white/10 border-b">
+                                <div className="bg-white/10 rounded-xl w-28 h-6" />
+                                <div className="bg-white/10 mt-3 rounded-xl w-60 h-4" />
+                            </div>
+                            <div className="p-4">
+                                <div className="bg-white/10 rounded-2xl h-[62vh]" />
+                            </div>
+                        </div>
                     </div>
                 )}
 
@@ -445,12 +681,12 @@ export default function IeeeCertificatesPage() {
                                             placeholder="Search..."
                                             className="bg-white/5 px-4 py-2.5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/40 text-white placeholder:text-gray-500 text-sm"
                                         />
-                                       <button 
-                        onClick={downloadExcel}
-                        className="flex items-center gap-2 bg-linear-to-r from-emerald-500 to-teal-600 shadow-lg px-3 py-1.5 rounded-2xl font-bold text-white hover:scale-105 transition-all"
-                    >
-                        <span>Download Excel (.xlsx)</span>
-                    </button>
+                                        <button
+                                            onClick={downloadExcel}
+                                            className="flex items-center gap-2 bg-linear-to-r from-emerald-500 to-teal-600 shadow-lg px-3 py-1.5 rounded-2xl font-bold text-white hover:scale-105 transition-all"
+                                        >
+                                            <span>Download Excel (.xlsx)</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -561,6 +797,17 @@ export default function IeeeCertificatesPage() {
                                         View in New Tab
                                     </button>
                                 )}
+
+                                {previewRecord && (
+                                    <button
+                                        type="button"
+                                        disabled={approveLoading || (previewRecord.status || '').toString().toLowerCase() === 'confirmed'}
+                                        onClick={handleFinalApprove}
+                                        className={`shadow-lg px-4 py-2 rounded-xl font-medium text-white text-sm transition ${approveLoading || (previewRecord.status || '').toString().toLowerCase() === 'confirmed' ? 'bg-white/10 opacity-50 cursor-not-allowed' : 'bg-linear-to-r from-emerald-500 to-teal-600 hover:scale-105'}`}
+                                    >
+                                        {approveLoading ? 'Confirming...' : 'Final Confirm Payment'}
+                                    </button>
+                                )}
                             </div>
 
                             <div className="bg-black/40 h-[70vh]">
@@ -583,6 +830,14 @@ export default function IeeeCertificatesPage() {
                                                 className={`px-3 py-1.5 rounded-xl text-sm transition ${previewTab === 'certificate' ? 'bg-white/15 text-white' : 'bg-white/5 text-gray-300 hover:bg-white/10'} ${!hasPreviewCertificate ? 'opacity-40 cursor-not-allowed' : ''}`}
                                             >
                                                 Certificate
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setPreviewTab('payment')}
+                                                disabled={!hasPreviewPaymentProof}
+                                                className={`px-3 py-1.5 rounded-xl text-sm transition ${previewTab === 'payment' ? 'bg-white/15 text-white' : 'bg-white/5 text-gray-300 hover:bg-white/10'} ${!hasPreviewPaymentProof ? 'opacity-40 cursor-not-allowed' : ''}`}
+                                            >
+                                                Payment Proof
                                             </button>
                                         </div>
 
@@ -610,6 +865,56 @@ export default function IeeeCertificatesPage() {
                                             ) : (
                                                 <div className="flex justify-center items-center text-gray-400 grow">
                                                     No certificate uploaded for this registration
+                                                </div>
+                                            )
+                                        ) : previewTab === 'payment' ? (
+                                            hasPreviewPaymentProof ? (
+                                                paymentLoading ? (
+                                                    <div className="flex justify-center items-center text-gray-400 grow">
+                                                        Loading payment proof...
+                                                    </div>
+                                                ) : paymentError ? (
+                                                    <div className="flex justify-center items-center text-red-300 grow">
+                                                        {paymentError}
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex flex-col h-full">
+                                                        <div className="space-y-4 p-4 overflow-y-auto">
+                                                            {approveSuccess && (
+                                                                <div className="bg-emerald-500/10 p-4 border border-emerald-400/20 rounded-xl text-emerald-200 text-sm">
+                                                                    {approveSuccess}
+                                                                </div>
+                                                            )}
+                                                            {approveError && (
+                                                                <div className="bg-red-500/10 p-4 border border-red-400/20 rounded-xl text-red-300 text-sm">
+                                                                    {approveError}
+                                                                </div>
+                                                            )}
+
+                                                            <div className="gap-3 grid grid-cols-1 sm:grid-cols-2">
+                                                                {renderField('UTR Number', previewRecord?.payment?.utrNumber || previewRecord?.utrNumber)}
+                                                                {renderField('Status', previewRecord?.status)}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="bg-black/40 grow">
+                                                            {paymentBlobUrl ? (
+                                                                <iframe
+                                                                    src={paymentBlobUrl}
+                                                                    title="Payment Proof Preview"
+                                                                    className="w-full h-full"
+                                                                />
+                                                            ) : (
+                                                                <div className="flex justify-center items-center h-full text-gray-400">
+                                                                    No preview available
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            ) : (
+                                                <div className="flex justify-center items-center text-gray-400 grow">
+                                                    No payment proof uploaded for this registration
                                                 </div>
                                             )
                                         ) : (

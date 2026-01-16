@@ -10,7 +10,6 @@ import { MessageCircle } from 'lucide-react';
 function SuccessContent() {
     const searchParams = useSearchParams();
     const registrationId = searchParams.get('id');
-    const verifying = searchParams.get('verifying') === '1';
 
     const API_URL = '/api';
 
@@ -27,35 +26,6 @@ function SuccessContent() {
 
         let isCancelled = false;
         let pollTimer;
-        let attempts = 0;
-
-        const triggerVerification = async () => {
-            if (!verifying) return;
-            const verifyResponse = await fetch(`${API_URL}/registrations/${registrationId}/verify-payment`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({}),
-                keepalive: true
-            });
-
-            let verifyData = null;
-            try {
-                verifyData = await verifyResponse.json();
-            } catch {
-                verifyData = null;
-            }
-
-            if (!verifyResponse.ok && verifyResponse.status !== 400) {
-                const message =
-                    verifyData?.message ||
-                    (typeof verifyData === 'string' ? verifyData : '') ||
-                    'Payment verification failed';
-                const cashfreeHint = verifyData?.cashfree
-                    ? ` (Cashfree: ${JSON.stringify(verifyData.cashfree)})`
-                    : '';
-                throw new Error(`${message}${cashfreeHint}`);
-            }
-        };
 
         const fetchRegistration = async () => {
             try {
@@ -70,27 +40,15 @@ function SuccessContent() {
 
                 if (isCancelled) return;
 
-                if (verifying && result.data?.status !== 'confirmed') {
-                    try {
-                        await triggerVerification();
-                    } catch (err) {
-                        setError(err?.message || 'Payment verification failed');
-                        setLoading(false);
-                        return;
-                    }
-                    attempts += 1;
-                    if (attempts >= 60) {
-                        setError('Payment verification is taking too long. Please refresh this page.');
-                        setLoading(false);
-                        return;
-                    }
+                setData(result.data);
 
-                    setLoading(true);
-                    pollTimer = setTimeout(fetchRegistration, 2000);
+                const status = (result.data?.status || '').toString().toLowerCase();
+                if (status !== 'confirmed') {
+                    setLoading(false);
+                    pollTimer = setTimeout(fetchRegistration, 2500);
                     return;
                 }
 
-                setData(result.data);
                 setLoading(false);
             } catch (err) {
                 if (isCancelled) return;
@@ -99,15 +57,13 @@ function SuccessContent() {
             }
         };
 
-        triggerVerification().finally(() => {
-            fetchRegistration();
-        });
+        fetchRegistration();
 
         return () => {
             isCancelled = true;
             if (pollTimer) clearTimeout(pollTimer);
         };
-    }, [registrationId, verifying]);
+    }, [registrationId]);
 
     /* ================= PDF DOWNLOAD ================= */
     const downloadPDF = async () => {
@@ -232,7 +188,7 @@ function SuccessContent() {
     if (loading) {
         return (
             <div className="p-12 text-center">
-                {verifying ? 'Verifying payment... Please wait' : 'Loading...'}
+                Loading...
             </div>
         );
     }
@@ -245,6 +201,48 @@ function SuccessContent() {
                 <Link href="/" className="mt-4 text-blue-600 hover:underline">
                     Go Home
                 </Link>
+            </div>
+        );
+    }
+
+    const status = (data?.status || '').toString().toLowerCase();
+
+    if (status && status !== 'confirmed') {
+        const title = status === 'under_review' ? 'Payment Under Review' : 'Payment Pending';
+        const subtitle = status === 'under_review'
+            ? 'Your payment proof has been submitted. Our team will verify it shortly.'
+            : 'Please complete the UPI payment step to submit your proof.';
+
+        return (
+            <div className="flex justify-center items-center bg-gray-50 p-4 min-h-screen">
+                <div className="bg-white shadow-xl p-8 rounded-2xl w-full max-w-md text-center">
+                    <h1 className="mb-2 font-bold text-gray-900 text-2xl">{title}</h1>
+                    <p className="mb-6 text-gray-600">{subtitle}</p>
+
+                    <div className="bg-gray-50 mb-6 p-6 border rounded-xl">
+                        <p className="text-gray-500 text-sm">Registration ID</p>
+                        <p className="mb-3 font-mono font-bold text-blue-600">{data.registrationId}</p>
+
+                        <p className="text-gray-500 text-sm">Status</p>
+                        <p className="mb-0 font-medium">{data.status}</p>
+                    </div>
+
+                    {status === 'pending_payment' && (
+                        <Link
+                            href={`/payment/${registrationId}`}
+                            className="inline-block bg-blue-600 hover:bg-blue-700 mb-4 px-6 py-3 rounded-lg text-white transition"
+                        >
+                            Go to Payment
+                        </Link>
+                    )}
+
+                    <Link
+                        href="/"
+                        className="inline-block bg-gray-900 hover:bg-gray-800 px-6 py-3 rounded-lg text-white transition"
+                    >
+                        Back to Home
+                    </Link>
+                </div>
             </div>
         );
     }

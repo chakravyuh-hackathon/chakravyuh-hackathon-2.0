@@ -103,7 +103,7 @@ export default function Page() {
     teamName: "Regi. Team",
     members: [
       { name: "Rutuja Rajmane", role: "", image: "/Reg/Rutuja%20Rajmane.jpg" },
-      { name: "Supriya Kore", role: "", image: "/Reg/Supriya%20kore.jpg" },
+      // { name: "Supriya Kore", role: "", image: "/Reg/Supriya%20kore.jpg" },
       { name: "Vaibhavi Kumbhar", role: "", image: "/Reg/Vaibhavi%20Kumbhar.jpg" },
          { name: "Omkar Dhekane", role: "", image: "/Reg/OMKAR.jpeg" }
     ]
