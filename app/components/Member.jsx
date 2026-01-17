@@ -163,9 +163,9 @@ const organisers = [
   { name: "Onkar Bhosale", role: "Co-Lead Organizer", image: "/Head/Onkar.jpeg", linkedin: "https://www.linkedin.com/in/onkarbhosale-" },
   { name: "Suraj Mali", role: "Technical Head", image: "/Head/suraj.jpeg", linkedin: "https://www.linkedin.com/in/suraj-s-mali/" },
   { name: "Abhijit Birajdar", role: "Technical Head", image: "/Head/Abhijit.jpeg", linkedin: "https://www.linkedin.com/in/abhijeet-birajdar-8a3842358" },
-  { name: "Prathamesh Virape ", role: "Operational Lead", image: "/Head/Prathamesh.jpg", linkedin: "https://www.linkedin.com/in/prathamesh-virape-0bb782317" },
-  { name: "Nishant Jadhav", role: "Design Head", image: "/Head/Nishu.jpeg", linkedin: "https://www.linkedin.com/in/nishant-jadhav007/" },
   { name: "Sneha Bodake", role: "Design Head", image: "/Head/Sneha.jpeg", linkedin: "https://www.linkedin.com/in/sneha-bodake-a40024372/" },
+  { name: "Nishant Jadhav", role: "Design Head", image: "/Head/Nishu.jpeg", linkedin: "https://www.linkedin.com/in/nishant-jadhav007/" },
+  { name: "Shweta Dubal", role: "Office In-charge", image: "/Head/Shweta Dubal.jpeg", linkedin: "https://www.linkedin.com/in/shweta-dubal" },
   { name: "Ranjeet Dhanawade", role: "Finance Head", image: "/Head/Ranj.jpg", linkedin: "https://www.linkedin.com/in/ranjeet-dhanawade-ab4ab428b" },
   { name: "Adesh Dethe", role: "Finance Head", image: "/Head/Adu.jpg", linkedin: "https://www.linkedin.com/in/adesh-dethe-041782317/" },
   { name: "Udayshankar Sakhare", role: "Social Media", image: "/Head/Uday.jpg", linkedin: "https://www.linkedin.com/in/udayshankar-sakhare/" },
@@ -174,7 +174,8 @@ const organisers = [
   { name: "Shraddha Patil", role: "Treasurer", image: "/Head/Shradha.jpeg", linkedin: "https://www.linkedin.com/in/shraddha-patill" },
   { name: "Sanchita Mhetre", role: "Hospitality Head", image: "/Head/Sanchita.jpg", linkedin: "https://www.linkedin.com/in/sanchita-mhetre-645781317" },
   { name: "Sacchidanand Magar", role: "Campaigning Head", image: "/Head/Magar.jpg", linkedin: "https://www.linkedin.com/in/sacchidanand-magar" },
-  { name: "Shweta Dubal", role: "Office In-charge", image: "/Head/Shweta Dubal.jpeg", linkedin: "https://www.linkedin.com/in/shweta-dubal" },
+  { name: "Prathamesh Virape ", role: "Operational Lead", image: "/Head/Prathamesh.jpg", linkedin: "https://www.linkedin.com/in/prathamesh-virape-0bb782317" },
+
 ];
 
 export default function Page() {

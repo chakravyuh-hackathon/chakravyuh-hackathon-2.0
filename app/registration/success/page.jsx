@@ -214,34 +214,43 @@ function SuccessContent() {
             : 'Please complete the UPI payment step to submit your proof.';
 
         return (
-            <div className="flex justify-center items-center bg-gray-50 p-4 min-h-screen">
-                <div className="bg-white shadow-xl p-8 rounded-2xl w-full max-w-md text-center">
-                    <h1 className="mb-2 font-bold text-gray-900 text-2xl">{title}</h1>
-                    <p className="mb-6 text-gray-600">{subtitle}</p>
-
-                    <div className="bg-gray-50 mb-6 p-6 border rounded-xl">
-                        <p className="text-gray-500 text-sm">Registration ID</p>
-                        <p className="mb-3 font-mono font-bold text-blue-600">{data.registrationId}</p>
-
-                        <p className="text-gray-500 text-sm">Status</p>
-                        <p className="mb-0 font-medium">{data.status}</p>
+            <div className="flex justify-center items-center bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 px-4 py-10 min-h-screen">
+                <div className="bg-white/90 shadow-2xl backdrop-blur-xl p-8 border border-white/60 rounded-2xl ring-1 ring-black/5 w-full max-w-lg transition-all">
+                    <div className="mb-6 text-center">
+                        <h1 className="mb-3 font-extrabold text-gray-900 text-3xl sm:text-4xl leading-tight">{title}</h1>
+                        <p className="text-gray-600 text-base sm:text-lg">{subtitle}</p>
                     </div>
 
-                    {status === 'pending_payment' && (
-                        <Link
-                            href={`/payment/${registrationId}`}
-                            className="inline-block bg-blue-600 hover:bg-blue-700 mb-4 px-6 py-3 rounded-lg text-white transition"
-                        >
-                            Go to Payment
-                        </Link>
-                    )}
+                    <div className="bg-linear-to-br from-gray-50 to-slate-100 mb-8 p-6 rounded-2xl ring-1 ring-black/5 overflow-hidden">
+                        <div className="space-y-4">
+                            <div>
+                                <p className="mb-1 font-medium text-gray-500 text-xs uppercase tracking-wide">Registration ID</p>
+                                <p className="font-mono font-bold text-blue-600 text-lg">{data.registrationId}</p>
+                            </div>
+                            <div>
+                                <p className="mb-1 font-medium text-gray-500 text-xs uppercase tracking-wide">Status</p>
+                                <p className="font-semibold text-gray-800">{data.status}</p>
+                            </div>
+                        </div>
+                    </div>
 
-                    <Link
-                        href="/"
-                        className="inline-block bg-gray-900 hover:bg-gray-800 px-6 py-3 rounded-lg text-white transition"
-                    >
-                        Back to Home
-                    </Link>
+                    <div className="space-y-3">
+                        {status === 'pending_payment' && (
+                            <Link
+                                href={`/payment/${registrationId}`}
+                                className="block bg-linear-to-r from-blue-600 hover:from-blue-700 to-indigo-600 hover:to-indigo-700 shadow-lg px-6 py-3.5 rounded-xl w-full font-semibold text-white text-center active:scale-[0.98] transition-all"
+                            >
+                                Go to Payment
+                            </Link>
+                        )}
+
+                        <Link
+                            href="/"
+                            className="block bg-linear-to-r from-gray-800 hover:from-gray-900 to-gray-900 hover:to-black shadow-md px-6 py-3.5 rounded-xl w-full font-semibold text-white text-center active:scale-[0.98] transition-all"
+                        >
+                            Back to Home
+                        </Link>
+                    </div>
                 </div>
             </div>
         );

@@ -157,7 +157,7 @@ export default function Page() {
         style={{ opacity: 0 }}
         className="z-10 relative bg-white/5 shadow-[0_0_80px_rgba(0,0,0,0.6)] backdrop-blur-2xl p-8 md:p-16 border border-white/10 rounded-[40px] max-w-4xl text-center"
       >
-        <div className="space-y-6 text-gray-300 text-sm md:text-lg md:text-center text-justify leading-relaxed">
+        {/* <div className="space-y-6 text-gray-300 text-sm md:text-lg md:text-center text-justify leading-relaxed">
   <p>
     Where passion meets purpose. Chakravyuh 2.0 is organized by a team of
     dedicated volunteers committed to building a strong and inclusive
@@ -173,7 +173,29 @@ export default function Page() {
   <p className="mt-6 font-semibold text-white text-base md:text-xl">
     More than a competition, Chakravyuh 2.0 is a place to connect and create together.
   </p>
+</div> */}
+
+
+<div className="space-y-6 text-gray-300 text-xs md:text-base md:text-center text-justify leading-relaxed">
+  <p>
+    Where passion meets purpose. <span className="font-semibold text-white">Chakravyuh 2.0 </span> 
+     is a 36-hour national-level hackathon driven by student volunteers, designed to foster 
+    innovation and solve real-world problems.
+  </p>
+
+  <p>
+    From <span className="font-semibold text-white">9th to 11th March</span>, 
+    developers and designers will unite to build impactful solutions. Beyond just coding, 
+    we provide expert mentorship and a collaborative space to explore emerging tech 
+    and showcase your skills.
+  </p>
+
+   <p className="mt-6 font-semibold text-white text-base md:text-xl">
+    More than a competition, Chakravyuh 2.0 is a place to connect, learn, and create together.
+  </p>
 </div>
+
+
 
         <div className="flex justify-center items-center gap-4 mt-10">
           <div className="bg-linear-to-r from-transparent to-[#B14BF4] w-12 h-px" />

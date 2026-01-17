@@ -59,7 +59,7 @@ export default function Footer() {
                 — Chakravyuh 2.0 Rule Book
               </a>
             </li>
-            <li>
+            {/* <li>
               <a
                 href="/pricing"
                 className="block hover:pl-2 hover:text-white transition-all duration-300"
@@ -106,7 +106,7 @@ export default function Footer() {
               >
                 — Contact Us
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
 

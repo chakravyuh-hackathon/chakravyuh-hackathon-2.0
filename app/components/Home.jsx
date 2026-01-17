@@ -22,7 +22,7 @@ export default function Page() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const targetDate = new Date("2026-03-08T00:00:00").getTime();
+    const targetDate = new Date("2026-03-07T00:00:00").getTime();
 
     const calculateTimeLeft = () => {
       const now = new Date().getTime();
@@ -103,7 +103,7 @@ export default function Page() {
         </h1>
 
         <ReactTyped
-          strings={["Last registration date: 8 March 2026", "Build | Battle | Break Limits"]}
+          strings={["Last registration date: 7 March 2026", "Build | Battle | Break Limits"]}
           typeSpeed={50}
           backSpeed={30}
           loop

@@ -209,7 +209,7 @@ export default function RegistrationPage() {
                             </div>
                         </div>
 
-                        <p className="mt-4 font-semibold text-gray-900 dark:text-gray-100 text-sm">
+                        {/* <p className="mt-4 font-semibold text-gray-900 dark:text-gray-100 text-sm">
                             Registration fee is for event participation only.
                         </p>
 
@@ -229,7 +229,37 @@ export default function RegistrationPage() {
                             <a href="/refund-cancellation" className="text-blue-600 dark:text-blue-400 hover:underline">Refund &amp; Cancellation</a>
                             <span className="mx-2 text-gray-400">|</span>
                             <a href="/terms-and-conditions" className="text-blue-600 dark:text-blue-400 hover:underline">Terms</a>
-                        </div>
+                        </div> */}
+
+
+                            
+                        <p className="mt-4 font-semibold text-gray-900 dark:text-gray-100 text-sm">
+  Registration fee is for event participation only and is subject to verification.
+</p>
+
+<ul className="space-y-1.5 mt-3 text-gray-700 dark:text-gray-300 text-sm list-disc list-inside">
+  <li>
+    Use a <span className="font-semibold">unique email ID</span> for registration (one-time use only).
+  </li>
+  <li>
+    Do <span className="font-semibold">not refresh or go back</span> once registration or payment starts.
+  </li>
+  <li>
+    If you leave the flow, you must <span className="font-semibold">start a new registration</span>.
+  </li>
+  <li>
+    Registration is <span className="font-semibold">confirmed only after admin verification</span>.
+  </li>
+  <li>
+    You will be allowed to attend the event <span className="font-semibold">only after receiving the confirmation email</span>.
+  </li>
+  <li>
+    Any <span className="font-semibold">incorrect or fraudulent details</span> may lead to
+    <span className="font-semibold"> cancellation of registration</span>.
+  </li>
+</ul>    
+
+                            
                     </div>
 
                     {error && (
@@ -1370,6 +1400,34 @@ export default function RegistrationPage() {
 //                         </div>
 //                     </form>
 //                 </div>
+//             </div>
+//         </div>
+//     );
+// }               </div>
+//             </div>
+//         </div>
+//     );
+// }                                       <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+//                                         </svg>
+//                                         Processing...
+//                                     </>
+//                                 ) : (
+//                                     <>
+//                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+//                                         </svg>
+//                                         Register & Pay
+//                                     </>
+//                                 )}
+//                             </button>
+//                         </div>
+//                     </form>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }               </div>
 //             </div>
 //         </div>
 //     );
