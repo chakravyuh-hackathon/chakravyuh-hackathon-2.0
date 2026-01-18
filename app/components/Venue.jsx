@@ -54,7 +54,7 @@ export default function Page() {
             <div>
               <h2 className="mb-2 font-bold text-purple-400 text-2xl">Date and Time</h2>
               <p className="text-xl">
-                12th to 14th March 2026 <br />
+                09th to 11th March 2026 <br />
               </p>
             </div>
 
