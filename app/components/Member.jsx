@@ -164,17 +164,17 @@ const organisers = [
   { name: "Suraj Mali", role: "Technical Head", image: "/Head/suraj.jpeg", linkedin: "https://www.linkedin.com/in/suraj-s-mali/" },
   { name: "Abhijit Birajdar", role: "Technical Head", image: "/Head/Abhijit.jpeg", linkedin: "https://www.linkedin.com/in/abhijeet-birajdar-8a3842358" },
   { name: "Sneha Bodake", role: "Design Head", image: "/Head/Sneha.jpeg", linkedin: "https://www.linkedin.com/in/sneha-bodake-a40024372/" },
-  { name: "Nishant Jadhav", role: "Design Head", image: "/Head/Nishu.jpeg", linkedin: "https://www.linkedin.com/in/nishant-jadhav007/" },
-  { name: "Shweta Dubal", role: "Office In-charge", image: "/Head/Shweta Dubal.jpeg", linkedin: "https://www.linkedin.com/in/shweta-dubal" },
+  { name: "Nishant Jadhav", role: "Design Head", image: "/Head/Nishu.jpeg", linkedin: "https://www.linkedin.com/in/nishant-jadhav007/" }, 
   { name: "Ranjeet Dhanawade", role: "Finance Head", image: "/Head/Ranj.jpg", linkedin: "https://www.linkedin.com/in/ranjeet-dhanawade-ab4ab428b" },
   { name: "Adesh Dethe", role: "Finance Head", image: "/Head/Adu.jpg", linkedin: "https://www.linkedin.com/in/adesh-dethe-041782317/" },
+  { name: "Shweta Dubal", role: "Office In-charge", image: "/Head/Shweta Dubal.jpeg", linkedin: "https://www.linkedin.com/in/shweta-dubal" },
   { name: "Udayshankar Sakhare", role: "Social Media", image: "/Head/Uday.jpg", linkedin: "https://www.linkedin.com/in/udayshankar-sakhare/" },
-  { name: "Samarth Mote", role: "Food Head", image: "/Head/Sama.jpeg", linkedin: "....." },
   { name: "Pranali Ingole ", role: "Swag Head", image: "/Head/Pranali.jpg", linkedin: "https://www.linkedin.com/in/pranalii-ingole" },
+  { name: "Samarth Mote", role: "Food Head", image: "/Head/Sama.jpeg", linkedin: "....." },
   { name: "Shraddha Patil", role: "Treasurer", image: "/Head/Shradha.jpeg", linkedin: "https://www.linkedin.com/in/shraddha-patill" },
   { name: "Sanchita Mhetre", role: "Hospitality Head", image: "/Head/Sanchita.jpg", linkedin: "https://www.linkedin.com/in/sanchita-mhetre-645781317" },
   { name: "Sacchidanand Magar", role: "Campaigning Head", image: "/Head/Magar.jpg", linkedin: "https://www.linkedin.com/in/sacchidanand-magar" },
-  { name: "Prathamesh Virape ", role: "Operational Lead", image: "/Head/Prathamesh.jpg", linkedin: "https://www.linkedin.com/in/prathamesh-virape-0bb782317" },
+  { name: "Prathamesh Virape ", role: "Operational Lead", image: "/Head/virape.jpeg", linkedin: "https://www.linkedin.com/in/prathamesh-virape-0bb782317" },
 
 ];
 

@@ -72,6 +72,7 @@ export default function Page() {
     teamName: "Management Team",
     members: [
       { name: "Gauri Mane", role: "", image: "/Mangment%20Team/Gauri%20Mane.jpg" },
+      { name: "Samruddhi Bhosale", role: "", image: "/Mangment%20Team/Samruddhi Bhosale.jpeg" },
       { name: "Mugdha Kore", role: "", image: "/Mangment%20Team/Mugdha%20kore.jpg" },
       { name: "Neha Lomate", role: "", image: "/Mangment%20Team/Neha%20Lomate.jpg" },
       { name: "Rutuja Havale", role: "", image: "/Mangment%20Team/RUTUJA%20HAVALE.jpg" },
@@ -97,6 +98,7 @@ export default function Page() {
       { name: "Samruddhi Satpute", role: "", image: "/Security/Samruddhi.jpg" },
       { name: "Sonali Khambale", role: "", image: "/Security/Sonali%20Khambale.jpg" },
       { name: "Srushti Kale", role: "", image: "/Security/SRUSHTI%20KALE.jpg" },
+      
     ],
   },
   {
@@ -105,7 +107,10 @@ export default function Page() {
       { name: "Rutuja Rajmane", role: "", image: "/Reg/Rutuja%20Rajmane.jpg" },
       // { name: "Supriya Kore", role: "", image: "/Reg/Supriya%20kore.jpg" },
       { name: "Vaibhavi Kumbhar", role: "", image: "/Reg/Vaibhavi%20Kumbhar.jpg" },
-         { name: "Omkar Dhekane", role: "", image: "/Reg/OMKAR.jpeg" }
+         { name: "Omkar Dhekane", role: "", image: "/Reg/OMKAR.jpeg" },
+         { name: "Sakshi Farad", role: "", image: "/Reg/Sakshi Farad.jpeg" },
+      { name: "Vaishnavi Metkari", role: "", image: "/Reg/Vaishnavi Metkari.jpeg" }
+
     ]
   },
   {
