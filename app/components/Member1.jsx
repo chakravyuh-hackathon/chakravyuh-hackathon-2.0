@@ -49,6 +49,7 @@ export default function Page() {
   teamName: "Food Team",
   members: [
     { name: "Rohan Savale", role: "", image: "/Food/rohan.jpeg" },
+    { name: "Ranjeet Patil", role: "", image: "/Food/Patil.jpeg" },
     { name: "Ashutosh Barbole", role: "", image: "/Food/ashutoshmalape.jpeg" },
     { name: "Ashutosh Malape", role: "", image: "/Food/ashutoshbarbole.jpeg" },
   ],
