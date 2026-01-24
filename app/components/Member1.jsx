@@ -50,7 +50,8 @@ export default function Page() {
   members: [
     { name: "Rohan Savale", role: "", image: "/Food/rohan.jpeg" },
     { name: "Ranjeet Patil", role: "", image: "/Food/Patil.jpeg" },
-    { name: "Ashutosh Barbole", role: "", image: "/Food/ashutoshmalape.jpeg" },
+    { name: "Ashutosh Barbole", role: "", image: "/Food/ashu.jpeg" },
+    { name: "Rohan Bondar", role: "", image: "/Food/bondar.jpeg" },
     { name: "Ashutosh Malape", role: "", image: "/Food/ashutoshbarbole.jpeg" },
   ],
 },
