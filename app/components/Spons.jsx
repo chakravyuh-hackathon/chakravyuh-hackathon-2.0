@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+ import Image from "next/image";
 import gsap from "gsap";
 
 function Page() {
@@ -49,8 +50,19 @@ function Page() {
             <div className="top-0 left-20 absolute bg-linear-to-r from-transparent via-white/70 to-transparent w-8 h-full" />
           </div>
 
+          <div className="relative flex justify-center mb-6">
+            <Image
+              src="/Spons Logo/Chandukaka Logo.png"
+              alt="Chandukaka Saraf"
+              width={900}
+              height={320}
+              priority
+              className="w-[260px] sm:w-[340px] md:w-[420px] h-auto object-contain"
+            />
+          </div>
+
           <p className="relative font-black text-white text-2xl sm:text-3xl tracking-wide">
-            Coming Soon
+            **
           </p>
         </div>
       </div>
