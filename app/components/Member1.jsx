@@ -20,6 +20,13 @@ export default function Page() {
       { name: "Siraj Sayyad", role: "", image: "/Social%20media/Siraj%20Sayyad.jpg" },
     ],
   },
+    {
+    teamName: "Camp. Team",
+    members: [
+      { name: "Jaydeep Surwase", role: "", image: "/Camp%20Team/jaydeep.jpeg" },
+    
+    ],
+  },
   {
     teamName: "Design Team",
     members: [
