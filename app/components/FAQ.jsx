@@ -18,7 +18,7 @@ const faqData = [
   { 
     category: "Registration", 
     question: "🎫 Is there a registration fee?", 
-    answer: "Yes, there is a fee of ₹811.86 per team for IEEE Members and ₹1,013.86 per team for Non-IEEE Members. If at least one member of your team is an active IEEE member, your entire team qualifies for the discounted rate of ₹811.86 per person." 
+    answer: "Yes, there is a fee of ₹1000 per team for IEEE Members and ₹1200 per team for Non-IEEE Members. If at least one member of your team is an active IEEE member, your entire team qualifies for the discounted rate 20% per Team." 
   },
   { 
     category: "Registration", 
@@ -62,7 +62,7 @@ const faqData = [
   { 
     category: "Event Details", 
     question: "📅 When and where is the hackathon taking place?", 
-    answer: "The hackathon will be held from 12th to 14th March 2026 and is organized by SVERI's College of Engineering, Pandharpur." 
+    answer: "The hackathon will be held from 09 to 11th March 2026 and is organized by SVERI's College of Engineering, Pandharpur." 
   },
   { 
     category: "Event Details", 
