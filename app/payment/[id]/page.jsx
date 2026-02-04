@@ -28,7 +28,7 @@ export default function PaymentPage() {
     const isIeee = (registration?.ieeeMember || 'no').toString().toLowerCase() === 'yes';
     const displayAmount = registration?.payment?.amount ?? (isIeee ? 1000 : 1200);
     const qrImagePath = isIeee ? '/upi/qr-1000.jpeg' : '/upi/qr-1200.jpeg';
-    const upiId = 'dipakpawaras19@ybl';
+    const upiId = 'dipakpawaras19-1@okaxis';
     const supportContact = '8669233747 (Dipak Sambhaji Pawar)';
 
     const handleFileChange = (e) => {
