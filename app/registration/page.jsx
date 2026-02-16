@@ -1,7 +1,9 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState,useRef } from 'react';
 import { useRouter } from 'next/navigation';
+
+
 
 export default function RegistrationPage() {
     const router = useRouter();
@@ -25,6 +27,8 @@ export default function RegistrationPage() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const errorRef = useRef(null);
+    const [showPopup, setShowPopup] = useState(false);
 
     const handleCertificateChange = async (e) => {
         const file = e.target.files?.[0];
@@ -156,6 +160,19 @@ export default function RegistrationPage() {
         } catch (error) {
             console.error('Registration error:', error);
             const message = error?.message || 'An error occurred. Please try again.';
+                setError(message);
+                setShowPopup(true);
+
+            // ✅ Scroll to error message
+            setTimeout(() => {
+                errorRef.current?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }, 100);
+        
+            // ✅ Popup alert
+            // alert(message);
             if (error instanceof TypeError && message.toLowerCase().includes('failed to fetch')) {
                 setError('Network error: could not reach the API. Make sure the backend is running and restart the Next.js dev server.');
             } else {
@@ -181,6 +198,25 @@ export default function RegistrationPage() {
                     </div>
                 </div>
             )}
+
+            {showPopup && (
+              <div className="z-50 fixed inset-0 flex justify-center items-center bg-black/40">
+                <div className="bg-white dark:bg-gray-900 shadow-xl p-6 rounded-xl w-full max-w-sm text-center">
+                  <p className="font-semibold text-red-600">{error}</p>
+
+                  <button
+                    onClick={() => setShowPopup(false)}
+                    className="bg-blue-600 hover:bg-blue-700 mt-4 px-4 py-2 rounded-lg text-white"
+                  >
+                    OK
+                  </button>
+                </div>
+              </div>
+            )}
+
+            
+
+
             <div className="bg-white dark:bg-gray-900 shadow-md dark:shadow-black/30 mx-auto border border-transparent dark:border-gray-800 rounded-xl max-w-md md:max-w-2xl overflow-hidden">
                 <div className="p-8">
                     <div className="mb-8 text-center">
@@ -263,7 +299,9 @@ export default function RegistrationPage() {
                     </div>
 
                     {error && (
-                        <div className="bg-red-50 dark:bg-red-950/40 mb-4 p-4 border border-transparent dark:border-red-900/40 rounded-md text-red-700 dark:text-red-200">
+                        <div 
+                        ref={errorRef}
+                        className="bg-red-50 dark:bg-red-950/40 mb-4 p-4 border border-transparent dark:border-red-900/40 rounded-md text-red-700 dark:text-red-200">
                             {error}
                         </div>
                     )}
@@ -1431,4 +1469,33 @@ export default function RegistrationPage() {
 //             </div>
 //         </div>
 //     );
+// }   );
+// }                                   </>
+//                                 )}
+//                             </button>
+//                         </div>
+//                     </form>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }               </div>
+//             </div>
+//         </div>
+//     );
+// }   );
+// }                                   </>
+//                                 )}
+//                             </button>
+//                         </div>
+//                     </form>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }               </div>
+//             </div>
+//         </div>
+//     );
+// }   );
 // }
