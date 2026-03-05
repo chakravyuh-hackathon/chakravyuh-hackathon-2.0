@@ -69,18 +69,18 @@ export default function HackathonSchedule() {
     {
       day: "DAY 1 – LAUNCH DAY",
       events: [
-        { time: "12:00 PM – 2:00 PM", activity: "Team Arrival, Registration & ID Verification\nResponsible: Hospitality + Registration + Security", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/4149/4149645.png" },
+        { time: "12:00 PM – 1:00 PM", activity: "Team Arrival, Registration & ID Verification\nResponsible: Hospitality + Registration + Security", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/4149/4149645.png" },
+        { time: "1:00 PM", activity: "Problem Statement Release\nTechnical Team Sync", color: "#8b5cf6", glow: "rgba(139, 92, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3212/3212634.png" },
         { time: "2:00 PM", activity: "Opening Ceremony\nResponsible Team: Core + Anchoring", color: "#ef4444", glow: "rgba(239, 68, 68, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3212/3212608.png" },
-        { time: "3:30 PM", activity: "Problem Statement Release\nTechnical Team Sync", color: "#8b5cf6", glow: "rgba(139, 92, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3212/3212634.png" },
         { time: "4:00 PM", activity: "Hackathon Starts\nStart of Event", color: "#3b82f6", glow: "rgba(59, 130, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/2992/2992377.png" },
-        { time: "9:00 PM", activity: "Mentor Round 1\nMentors + Technical", color: "#3b82f6", glow: "rgba(59, 130, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3212/3212623.png" },
+        { time: "8:00 PM", activity: "Mentor Round 1\nMentors + Technical", color: "#3b82f6", glow: "rgba(59, 130, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3212/3212623.png" },
         { time: "11:30 PM", activity: "Midnight Fun Session\nCore+Design", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3408/3408545.png" },
       ],
     },
     {
       day: "DAY 2 – BUILD, BOND & MID-JUDGING",
       events: [
-        { time: "11:00 AM – 1:00 PM", activity: "Mid-Judging Round\nCore + Judges", color: "#10b981", glow: "rgba(16, 185, 129, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3212/3212619.png" },
+        { time: "11:00 AM – 2:00 PM", activity: "Mid-Judging Round\nCore + Judges", color: "#10b981", glow: "rgba(16, 185, 129, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3212/3212619.png" },
         { time: "1:00 PM", activity: "Lunch (Included Meal 2)\nFood Team", color: "#ec4899", glow: "rgba(236, 72, 153, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/2737/2737034.png" },
         { time: "2:30 PM", activity: "Checkpoint Review\nCore + Judges", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/1067/1067561.png" },
         { time: "4:00 PM", activity: "Fun Activity\nCampaigning + Cultural", color: "#8b5cf6", glow: "rgba(139, 92, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3069/3069172.png" },
@@ -90,10 +90,10 @@ export default function HackathonSchedule() {
     {
       day: "DAY 3 – DEMO, JUDGING & CELEBRATION",
       events: [
-        { time: "6:00 AM", activity: "Code Freeze\nTechnical - Submission Closed", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/2916/2916115.png" },
-        { time: "6:00–7:00 AM", activity: "Submission & Setup\nTechnical + Participants", color: "#3b82f6", glow: "rgba(59, 130, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/2906/2906274.png" },
-        { time: "7:00–8:30 AM", activity: "Presentation Prep\nParticipants", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3067/3067451.png" },
-        { time: "8:30–10:30 AM", activity: "Final Judging (Top 100)\nJudges Panel", color: "#8b5cf6", glow: "rgba(139, 92, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3212/3212619.png" },
+        { time: "8:00 AM", activity: "Code Freeze\nTechnical - Submission Closed", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/2916/2916115.png" },
+        { time: "8:00–9:00 AM", activity: "Submission & Setup\nTechnical + Participants", color: "#3b82f6", glow: "rgba(59, 130, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/2906/2906274.png" },
+        { time: "9:00–9:30 AM", activity: "Presentation Prep\nParticipants", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3067/3067451.png" },
+        { time: "9:30–12:30 AM", activity: "Final Judging (Top 100)\nJudges Panel", color: "#8b5cf6", glow: "rgba(139, 92, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3212/3212619.png" },
         { time: "12:30–1:30 PM", activity: "Final Judging (Top 20)\nFinal Ranking Protocol", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3112/3112946.png" },
         { time: "1:30 PM", activity: "Closing Ceremony\nAnchoring + Core", color: "#3b82f6", glow: "rgba(59, 130, 246, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/3212/3212608.png" },
         { time: "2:30 PM", activity: "Prize Distribution\nFinance + Core", color: "#10b981", glow: "rgba(16, 185, 129, 0.5)", img: "https://cdn-icons-png.flaticon.com/512/2618/2618254.png" },

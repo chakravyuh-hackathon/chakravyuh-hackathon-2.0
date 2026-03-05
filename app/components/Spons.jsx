@@ -104,11 +104,15 @@ import gsap from "gsap";
 
 // Updated sponsor data with the Blue Bold logo
 const SPONSORS = [
-  { id: 1, src: "/Spons Logo/Chandukaka Logo.png", alt: "Chandukaka Saraf" },
-  { id: 2, src: "/Spons Logo/devfolio2.png", alt: "Devfolio" },
-  { id: 3, src: "/Spons Logo/ethindia.png", alt: "Ethindia" },
-  { id: 4, src: "/Spons Logo/Blue Bold.png", alt: "Blue Bold" }, // New Logo Added Here
-];
+    { id: 1, src: "/Spons%20Logo/ieee.png", alt: "ieee" },
+    { id: 2, src: "/Spons%20Logo/idealab.png", alt: "idealab" },
+    { id: 3, src: "/Spons%20Logo/Byte.jpeg", alt: "Blue Bold" },
+  { id: 4, src: "/Spons%20Logo/Chandukaka%20Logo.png", alt: "Chandukaka Saraf" },
+  { id: 5, src: "/Spons%20Logo/devfolio2.png", alt: "Devfolio" },
+  { id: 6, src: "/Spons%20Logo/ethindia.png", alt: "Ethindia" },
+  
+
+  ];
 
 function SponsorCard({ src, alt }) {
   const shineWrap = useRef(null);
