@@ -1570,6 +1570,124 @@
 //Registration Page 
 
 
+// 'use client';
+
+// import { useMemo } from 'react';
+// import { useRouter } from 'next/navigation';
+
+// export default function RegistrationClosedPage() {
+//     const router = useRouter();
+
+//     return (
+//         <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-950 px-4 sm:px-6 lg:px-8 py-12 min-h-screen text-black dark:text-gray-100">
+            
+//             {/* Background Decorative Elements (Matching your design) */}
+//             <div className="fixed inset-0 overflow-hidden pointer-events-none">
+//                 <div className="top-1/4 left-1/4 absolute bg-blue-500/10 blur-3xl rounded-full w-64 h-64 animate-pulse"></div>
+//                 <div className="right-1/4 bottom-1/4 absolute bg-purple-500/10 blur-3xl rounded-full w-96 h-96 animate-pulse delay-700"></div>
+//             </div>
+
+//             <div className="z-10 bg-white dark:bg-gray-900 shadow-2xl dark:shadow-black/50 mx-auto border border-transparent dark:border-gray-800 rounded-2xl max-w-md md:max-w-2xl overflow-hidden">
+//                 <div className="p-8 md:p-12 text-center">
+                    
+//                     {/* Header Section */}
+//                     <div className="mb-10">
+//                         <div className="flex justify-center items-center gap-3 mb-6">
+//                             <div className="bg-linear-to-r from-red-500 to-orange-600 shadow-lg p-4 rounded-2xl">
+//                                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+//                                 </svg>
+//                             </div>
+//                         </div>
+                        
+//                         <h1 className="bg-clip-text bg-linear-to-r from-gray-900 dark:from-gray-100 to-gray-600 dark:to-gray-400 mb-3 font-black text-transparent text-4xl md:text-5xl tracking-tight">
+//                             CHAKRAVYUH <span className="text-orange-500">2.0</span>
+//                         </h1>
+//                         <div className="inline-block bg-red-100 dark:bg-red-900/30 mb-4 px-4 py-1 rounded-full font-bold text-red-600 dark:text-red-400 text-xs uppercase tracking-widest">
+//                             Registration Closed
+//                         </div>
+//                         <p className="mx-auto max-w-sm text-gray-600 dark:text-gray-400 text-base leading-relaxed">
+//                             The battlefield has reached its capacity. No new warriors can enter the arena at this time.
+//                         </p>
+//                     </div>
+
+//                     {/* Stats/Info Section */}
+//                     <div className="bg-gray-50 dark:bg-gray-950/40 mb-10 p-6 border border-gray-200 dark:border-gray-800 rounded-2xl">
+//                         <div className="gap-4 grid grid-cols-1">
+//                             <div className="text-center">
+//                                 <div className="mb-1 text-gray-500 dark:text-gray-400 text-sm uppercase tracking-tighter">Event Status</div>
+//                                 <div className="font-bold text-blue-600 dark:text-blue-400 text-2xl">Live Soon</div>
+//                             </div>
+//                         </div>
+//                     </div>
+
+//                     {/* Guidelines/Next Steps (Reusing your list style) */}
+//                     <div className="mb-10 text-left">
+//                         <h3 className="mb-4 px-2 font-bold text-gray-900 dark:text-gray-100 text-sm uppercase tracking-wider">Important Updates</h3>
+//                         <ul className="space-y-3 text-gray-700 dark:text-gray-300 text-sm">
+//                             <li className="flex items-start gap-3">
+//                                 <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+//                                 <span>Already registered? Check your <span className="font-bold text-blue-500">confirmation email</span> for your unique QR ticket.</span>
+//                             </li>
+//                             <li className="flex items-start gap-3">
+//                                 <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+//                                 <span>Verification of existing payments is currently in progress by the admin team.</span>
+//                             </li>
+//                             <li className="flex items-start gap-3">
+//                                 <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+//                                 <span>Follow our social media for the <span className="font-bold uppercase tracking-wide">Final Shortlist</span> announcement.</span>
+//                             </li>
+//                         </ul>
+//                     </div>
+
+//                     {/* Footer Actions */}
+//                     <div className="flex sm:flex-row flex-col justify-center gap-4">
+//                         <button
+//                             onClick={() => router.push('/')}
+//                             className="flex justify-center items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 px-8 py-3 border border-gray-300 dark:border-gray-700 rounded-xl w-full sm:w-auto font-semibold text-gray-700 dark:text-gray-200 transition-all duration-200"
+//                         >
+//                             Back to Home
+//                         </button>
+//                         <button
+//                             disabled
+//                             className="flex justify-center items-center gap-2 bg-gray-400 dark:bg-gray-800 opacity-60 px-8 py-3 rounded-xl w-full sm:w-auto font-semibold text-white cursor-not-allowed"
+//                         >
+//                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+//                             Registrations Closed
+//                         </button>
+//                     </div>
+//                 </div>
+//             </div>
+
+//             {/* Floating Indicator (Matching your design) */}
+//             <div className="bottom-8 left-8 fixed bg-white/50 dark:bg-gray-900/50 shadow-lg backdrop-blur-lg p-3 border border-gray-200 dark:border-gray-800 rounded-full">
+//                 <span className="px-2 font-bold text-blue-500 dark:text-blue-400">1</span>
+//             </div>
+//         </div>
+//     );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 'use client';
 
 import { useMemo } from 'react';
@@ -1579,9 +1697,9 @@ export default function RegistrationClosedPage() {
     const router = useRouter();
 
     return (
-        <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-950 px-4 sm:px-6 lg:px-8 py-12 min-h-screen text-black dark:text-gray-100">
+        <div className="relative flex justify-center items-center bg-gray-50 dark:bg-gray-950 px-4 sm:px-6 lg:px-8 py-12 min-h-screen text-black dark:text-gray-100">
             
-            {/* Background Decorative Elements (Matching your design) */}
+            {/* Background Decorative Elements */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
                 <div className="top-1/4 left-1/4 absolute bg-blue-500/10 blur-3xl rounded-full w-64 h-64 animate-pulse"></div>
                 <div className="right-1/4 bottom-1/4 absolute bg-purple-500/10 blur-3xl rounded-full w-96 h-96 animate-pulse delay-700"></div>
@@ -1611,31 +1729,37 @@ export default function RegistrationClosedPage() {
                         </p>
                     </div>
 
-                    {/* Stats/Info Section */}
-                    <div className="bg-gray-50 dark:bg-gray-950/40 mb-10 p-6 border border-gray-200 dark:border-gray-800 rounded-2xl">
-                        <div className="gap-4 grid grid-cols-1">
-                            <div className="text-center">
-                                <div className="mb-1 text-gray-500 dark:text-gray-400 text-sm uppercase tracking-tighter">Event Status</div>
-                                <div className="font-bold text-blue-600 dark:text-blue-400 text-2xl">Live Soon</div>
-                            </div>
+                    {/* Contact / Help Section */}
+                    <div className="bg-blue-50 dark:bg-blue-900/10 mb-8 p-5 border border-blue-100 dark:border-blue-800/50 rounded-xl">
+                        <div className="flex justify-center items-center gap-3 mb-2 font-bold text-blue-700 dark:text-blue-400 text-sm uppercase tracking-wider">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            Have a Query?
                         </div>
+                        <p className="mb-3 text-gray-600 dark:text-gray-300 text-sm">If you have any questions regarding your registration or the event, feel free to contact us:</p>
+                        <a 
+                            href="tel:+918459558948" 
+                            className="group inline-flex items-center gap-2 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md px-6 py-2.5 border border-blue-200 dark:border-blue-800 rounded-lg transition-all"
+                        >
+                            <svg className="w-5 h-5 text-blue-600 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <span className="font-mono font-bold text-gray-900 dark:text-white text-lg">+91 8459558948</span>
+                        </a>
                     </div>
 
-                    {/* Guidelines/Next Steps (Reusing your list style) */}
+                    {/* Important Updates List */}
                     <div className="mb-10 text-left">
                         <h3 className="mb-4 px-2 font-bold text-gray-900 dark:text-gray-100 text-sm uppercase tracking-wider">Important Updates</h3>
-                        <ul className="space-y-3 text-gray-700 dark:text-gray-300 text-sm">
+                        <ul className="space-y-3 px-2 text-gray-700 dark:text-gray-300 text-sm">
                             <li className="flex items-start gap-3">
                                 <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                <span>Already registered? Check your <span className="font-bold text-blue-500">confirmation email</span> for your unique QR ticket.</span>
+                                <span>Check your <span className="font-bold text-blue-500">confirmation email</span> for your unique QR ticket.</span>
                             </li>
                             <li className="flex items-start gap-3">
                                 <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                <span>Verification of existing payments is currently in progress by the admin team.</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                <span>Follow our social media for the <span className="font-bold uppercase tracking-wide">Final Shortlist</span> announcement.</span>
+                                <span>Verification of payments is currently in progress.</span>
                             </li>
                         </ul>
                     </div>
@@ -1650,7 +1774,7 @@ export default function RegistrationClosedPage() {
                         </button>
                         <button
                             disabled
-                            className="flex justify-center items-center gap-2 bg-gray-400 dark:bg-gray-800 opacity-60 px-8 py-3 rounded-xl w-full sm:w-auto font-semibold text-white cursor-not-allowed"
+                            className="flex justify-center items-center gap-2 bg-gray-300 dark:bg-gray-800 opacity-60 px-8 py-3 rounded-xl w-full sm:w-auto font-semibold text-white cursor-not-allowed"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636" /></svg>
                             Registrations Closed
@@ -1659,7 +1783,7 @@ export default function RegistrationClosedPage() {
                 </div>
             </div>
 
-            {/* Floating Indicator (Matching your design) */}
+            {/* Floating Indicator */}
             <div className="bottom-8 left-8 fixed bg-white/50 dark:bg-gray-900/50 shadow-lg backdrop-blur-lg p-3 border border-gray-200 dark:border-gray-800 rounded-full">
                 <span className="px-2 font-bold text-blue-500 dark:text-blue-400">1</span>
             </div>
