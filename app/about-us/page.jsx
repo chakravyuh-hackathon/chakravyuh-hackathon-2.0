@@ -45,7 +45,7 @@ export default function AboutUsPage() {
                 Pandharpur, Maharashtra
               </p>
               <p>
-                <span className="font-semibold text-white">Dates:</span> 12th to 14th March 2026
+                <span className="font-semibold text-white">Dates:</span> 09th to 11th March 2026
               </p>
             </div>
           </section>
@@ -55,10 +55,10 @@ export default function AboutUsPage() {
             <p className="mt-4 text-white/80 leading-relaxed">
               For official communication, email us at
               <a
-                href="mailto:chakravyuh@coe.sveri.ac.in"
+                href="mailto:chakravyuh@sveri.ac.in"
                 className="ml-1 font-semibold text-purple-300 hover:text-purple-200 underline underline-offset-4"
               >
-                chakravyuh@coe.sveri.ac.in
+                chakravyuh@sveri.ac.in
               </a>
               .
             </p>
