@@ -110,6 +110,8 @@ const SPONSORS = [
   { id: 4, src: "/Spons%20Logo/Chandukaka%20Logo.png", alt: "Chandukaka Saraf" },
   { id: 5, src: "/Spons%20Logo/devfolio2.png", alt: "Devfolio" },
   { id: 6, src: "/Spons%20Logo/ethindia.png", alt: "Ethindia" },
+    { id: 7, src: "/Spons%20Logo/Arihant.png", alt: "Ethindia" },
+
   
 
   ];
