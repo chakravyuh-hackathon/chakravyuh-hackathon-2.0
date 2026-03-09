@@ -111,6 +111,9 @@ const SPONSORS = [
   { id: 5, src: "/Spons%20Logo/devfolio2.png", alt: "Devfolio" },
   { id: 6, src: "/Spons%20Logo/ethindia.png", alt: "Ethindia" },
     { id: 7, src: "/Spons%20Logo/Arihant.png", alt: "Ethindia" },
+    
+  { id: 8, src: "/Spons%20Logo/yash.png", alt: "Ethindia" },
+    { id: 9, src: "/Spons%20Logo/yash2.png", alt: "Ethindia" },
 
   
 
