@@ -1685,107 +1685,205 @@
 
 
 
+//registration closed page
+
+
+// 'use client';
+
+// import { useMemo } from 'react';
+// import { useRouter } from 'next/navigation';
+
+// export default function RegistrationClosedPage() {
+//     const router = useRouter();
+
+//     return (
+//         <div className="relative flex justify-center items-center bg-gray-50 dark:bg-gray-950 px-4 sm:px-6 lg:px-8 py-12 min-h-screen text-black dark:text-gray-100">
+            
+//             {/* Background Decorative Elements */}
+//             <div className="fixed inset-0 overflow-hidden pointer-events-none">
+//                 <div className="top-1/4 left-1/4 absolute bg-blue-500/10 blur-3xl rounded-full w-64 h-64 animate-pulse"></div>
+//                 <div className="right-1/4 bottom-1/4 absolute bg-purple-500/10 blur-3xl rounded-full w-96 h-96 animate-pulse delay-700"></div>
+//             </div>
+
+//             <div className="z-10 bg-white dark:bg-gray-900 shadow-2xl dark:shadow-black/50 mx-auto border border-transparent dark:border-gray-800 rounded-2xl max-w-md md:max-w-2xl overflow-hidden">
+//                 <div className="p-8 md:p-12 text-center">
+                    
+//                     {/* Header Section */}
+//                     <div className="mb-10">
+//                         <div className="flex justify-center items-center gap-3 mb-6">
+//                             <div className="bg-linear-to-r from-red-500 to-orange-600 shadow-lg p-4 rounded-2xl">
+//                                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+//                                 </svg>
+//                             </div>
+//                         </div>
+                        
+//                         <h1 className="bg-clip-text bg-linear-to-r from-gray-900 dark:from-gray-100 to-gray-600 dark:to-gray-400 mb-3 font-black text-transparent text-4xl md:text-5xl tracking-tight">
+//                             CHAKRAVYUH <span className="text-orange-500">2.0</span>
+//                         </h1>
+//                         <div className="inline-block bg-red-100 dark:bg-red-900/30 mb-4 px-4 py-1 rounded-full font-bold text-red-600 dark:text-red-400 text-xs uppercase tracking-widest">
+//                             Registration Closed
+//                         </div>
+//                         <p className="mx-auto max-w-sm text-gray-600 dark:text-gray-400 text-base leading-relaxed">
+//                             The battlefield has reached its capacity. No new warriors can enter the arena at this time.
+//                         </p>
+//                     </div>
+
+//                     {/* Contact / Help Section */}
+//                     <div className="bg-blue-50 dark:bg-blue-900/10 mb-8 p-5 border border-blue-100 dark:border-blue-800/50 rounded-xl">
+//                         <div className="flex justify-center items-center gap-3 mb-2 font-bold text-blue-700 dark:text-blue-400 text-sm uppercase tracking-wider">
+//                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+//                             </svg>
+//                             Have a Query?
+//                         </div>
+//                         <p className="mb-3 text-gray-600 dark:text-gray-300 text-sm">If you have any questions regarding your registration or the event, feel free to contact us:</p>
+//                         <a 
+//                             href="tel:+918459558948" 
+//                             className="group inline-flex items-center gap-2 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md px-6 py-2.5 border border-blue-200 dark:border-blue-800 rounded-lg transition-all"
+//                         >
+//                             <svg className="w-5 h-5 text-blue-600 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+//                             </svg>
+//                             <span className="font-mono font-bold text-gray-900 dark:text-white text-lg">+91 8459558948</span>
+//                         </a>
+//                     </div>
+
+//                     {/* Important Updates List */}
+//                     <div className="mb-10 text-left">
+//                         <h3 className="mb-4 px-2 font-bold text-gray-900 dark:text-gray-100 text-sm uppercase tracking-wider">Important Updates</h3>
+//                         <ul className="space-y-3 px-2 text-gray-700 dark:text-gray-300 text-sm">
+//                             <li className="flex items-start gap-3">
+//                                 <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+//                                 <span>Check your <span className="font-bold text-blue-500">confirmation email</span> for your unique QR ticket.</span>
+//                             </li>
+//                             <li className="flex items-start gap-3">
+//                                 <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+//                                 <span>Verification of payments is currently in progress.</span>
+//                             </li>
+//                         </ul>
+//                     </div>
+
+//                     {/* Footer Actions */}
+//                     <div className="flex sm:flex-row flex-col justify-center gap-4">
+//                         <button
+//                             onClick={() => router.push('/')}
+//                             className="flex justify-center items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 px-8 py-3 border border-gray-300 dark:border-gray-700 rounded-xl w-full sm:w-auto font-semibold text-gray-700 dark:text-gray-200 transition-all duration-200"
+//                         >
+//                             Back to Home
+//                         </button>
+//                         <button
+//                             disabled
+//                             className="flex justify-center items-center gap-2 bg-gray-300 dark:bg-gray-800 opacity-60 px-8 py-3 rounded-xl w-full sm:w-auto font-semibold text-white cursor-not-allowed"
+//                         >
+//                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+//                             Registrations Closed
+//                         </button>
+//                     </div>
+//                 </div>
+//             </div>
+
+//             {/* Floating Indicator */}
+//             <div className="bottom-8 left-8 fixed bg-white/50 dark:bg-gray-900/50 shadow-lg backdrop-blur-lg p-3 border border-gray-200 dark:border-gray-800 rounded-full">
+//                 <span className="px-2 font-bold text-blue-500 dark:text-blue-400">1</span>
+//             </div>
+//         </div>
+//     );
+// } 
+
+
+
 
 
 
 'use client';
 
-import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function RegistrationClosedPage() {
+export default function ThankYouPage() {
     const router = useRouter();
 
     return (
-        <div className="relative flex justify-center items-center bg-gray-50 dark:bg-gray-950 px-4 sm:px-6 lg:px-8 py-12 min-h-screen text-black dark:text-gray-100">
+        <div className="relative flex justify-center items-center bg-gray-50 dark:bg-gray-950 px-4 sm:px-6 lg:px-8 py-12 min-h-screen text-black dark:text-gray-100 overflow-hidden">
             
-            {/* Background Decorative Elements */}
+            {/* Animated Background Elements */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div className="top-1/4 left-1/4 absolute bg-blue-500/10 blur-3xl rounded-full w-64 h-64 animate-pulse"></div>
-                <div className="right-1/4 bottom-1/4 absolute bg-purple-500/10 blur-3xl rounded-full w-96 h-96 animate-pulse delay-700"></div>
+                <div className="top-1/4 left-1/4 absolute bg-orange-500/10 blur-3xl rounded-full w-64 h-64 animate-pulse"></div>
+                <div className="right-1/4 bottom-1/4 absolute bg-blue-500/10 blur-3xl rounded-full w-96 h-96 animate-pulse delay-700"></div>
             </div>
 
-            <div className="z-10 bg-white dark:bg-gray-900 shadow-2xl dark:shadow-black/50 mx-auto border border-transparent dark:border-gray-800 rounded-2xl max-w-md md:max-w-2xl overflow-hidden">
+            <div className="z-10 bg-white dark:bg-gray-900 shadow-2xl dark:shadow-black/50 mx-auto border border-transparent dark:border-gray-800 rounded-2xl max-w-md md:max-w-3xl overflow-hidden">
                 <div className="p-8 md:p-12 text-center">
                     
-                    {/* Header Section */}
-                    <div className="mb-10">
+                    {/* Icon & Celebration Header */}
+                    <div className="mb-8">
                         <div className="flex justify-center items-center gap-3 mb-6">
-                            <div className="bg-linear-to-r from-red-500 to-orange-600 shadow-lg p-4 rounded-2xl">
-                                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            <div className="bg-linear-to-r from-orange-500 to-yellow-500 shadow-lg p-4 rounded-2xl animate-bounce">
+                                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" />
                                 </svg>
                             </div>
                         </div>
                         
-                        <h1 className="bg-clip-text bg-linear-to-r from-gray-900 dark:from-gray-100 to-gray-600 dark:to-gray-400 mb-3 font-black text-transparent text-4xl md:text-5xl tracking-tight">
-                            CHAKRAVYUH <span className="text-orange-500">2.0</span>
+                        <h1 className="bg-clip-text bg-linear-to-r from-gray-900 dark:from-gray-100 to-gray-600 dark:to-gray-400 mb-2 font-black text-transparent text-4xl md:text-6xl tracking-tight">
+                            THANK YOU
                         </h1>
-                        <div className="inline-block bg-red-100 dark:bg-red-900/30 mb-4 px-4 py-1 rounded-full font-bold text-red-600 dark:text-red-400 text-xs uppercase tracking-widest">
-                            Registration Closed
-                        </div>
-                        <p className="mx-auto max-w-sm text-gray-600 dark:text-gray-400 text-base leading-relaxed">
-                            The battlefield has reached its capacity. No new warriors can enter the arena at this time.
+                        <h2 className="mb-4 font-bold text-orange-500 text-xl tracking-widest uppercase">
+                            Chakravyuh 2.0 Success
+                        </h2>
+                        <p className="mx-auto max-w-2xl text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
+                            The battlefield has fallen silent, but the echoes of brilliance remain. 
+                            We extend our heartfelt gratitude to everyone who made this edition legendary.
                         </p>
                     </div>
 
-                    {/* Contact / Help Section */}
-                    <div className="bg-blue-50 dark:bg-blue-900/10 mb-8 p-5 border border-blue-100 dark:border-blue-800/50 rounded-xl">
-                        <div className="flex justify-center items-center gap-3 mb-2 font-bold text-blue-700 dark:text-blue-400 text-sm uppercase tracking-wider">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
-                            Have a Query?
+                    {/* Stats Section */}
+                    <div className="gap-4 grid grid-cols-2 md:grid-cols-3 mb-10">
+                        <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <div className="font-black text-2xl text-orange-500">200+</div>
+                            <div className="text-gray-500 text-xs uppercase">Teams</div>
                         </div>
-                        <p className="mb-3 text-gray-600 dark:text-gray-300 text-sm">If you have any questions regarding your registration or the event, feel free to contact us:</p>
-                        <a 
-                            href="tel:+918459558948" 
-                            className="group inline-flex items-center gap-2 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md px-6 py-2.5 border border-blue-200 dark:border-blue-800 rounded-lg transition-all"
-                        >
-                            <svg className="w-5 h-5 text-blue-600 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                            </svg>
-                            <span className="font-mono font-bold text-gray-900 dark:text-white text-lg">+91 8459558948</span>
-                        </a>
+                        <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <div className="font-black text-2xl text-blue-500">1000+</div>
+                            <div className="text-gray-500 text-xs uppercase">Participants</div>
+                        </div>
+                        <div className="bg-gray-50 dark:bg-gray-800/50 col-span-2 md:col-span-1 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <div className="font-black text-2xl text-purple-500">Infinite</div>
+                            <div className="text-gray-500 text-xs uppercase">Innovation</div>
+                        </div>
                     </div>
 
-                    {/* Important Updates List */}
-                    <div className="mb-10 text-left">
-                        <h3 className="mb-4 px-2 font-bold text-gray-900 dark:text-gray-100 text-sm uppercase tracking-wider">Important Updates</h3>
-                        <ul className="space-y-3 px-2 text-gray-700 dark:text-gray-300 text-sm">
-                            <li className="flex items-start gap-3">
-                                <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                <span>Check your <span className="font-bold text-blue-500">confirmation email</span> for your unique QR ticket.</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                <span>Verification of payments is currently in progress.</span>
-                            </li>
-                        </ul>
+                    {/* Gratitude List */}
+                    <div className="bg-orange-50 dark:bg-orange-900/10 mb-10 p-6 border border-orange-100 dark:border-orange-800/50 rounded-2xl text-left">
+                        <h3 className="mb-4 font-bold text-orange-700 dark:text-orange-400 text-sm uppercase tracking-widest">To our Backbone:</h3>
+                        <div className="gap-y-3 gap-x-6 grid grid-cols-1 md:grid-cols-2 text-gray-700 dark:text-gray-300 text-sm">
+                            <span className="flex items-center gap-2">✨ Brilliant Participants</span>
+                            <span className="flex items-center gap-2">⚖️ Distinguished Judges</span>
+                            <span className="flex items-center gap-2">🤝 Dedicated Volunteers</span>
+                            <span className="flex items-center gap-2">📋 Expert Coordinators</span>
+                            <span className="flex items-center gap-2">👑 Visionary Heads & Organizers</span>
+                            <span className="flex items-center gap-2">🏫 SVERI Family</span>
+                        </div>
                     </div>
 
-                    {/* Footer Actions */}
-                    <div className="flex sm:flex-row flex-col justify-center gap-4">
+                    {/* Next Edition Teaser */}
+                    <div className="mb-10">
+                        <p className="mb-2 font-medium text-gray-500 italic">Get ready for the next level...</p>
+                        <div className="font-black text-3xl text-gray-900 dark:text-white tracking-tighter">
+                            SEE YOU IN <span className="bg-clip-text bg-linear-to-r from-blue-600 to-purple-600 text-transparent">CHAKRAVYUH 3.0</span>
+                        </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex justify-center">
                         <button
                             onClick={() => router.push('/')}
-                            className="flex justify-center items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 px-8 py-3 border border-gray-300 dark:border-gray-700 rounded-xl w-full sm:w-auto font-semibold text-gray-700 dark:text-gray-200 transition-all duration-200"
+                            className="flex justify-center items-center gap-2 bg-gray-900 dark:bg-white hover:opacity-90 px-10 py-4 rounded-xl w-full sm:w-auto font-bold text-white dark:text-gray-900 transition-all duration-200"
                         >
-                            Back to Home
-                        </button>
-                        <button
-                            disabled
-                            className="flex justify-center items-center gap-2 bg-gray-300 dark:bg-gray-800 opacity-60 px-8 py-3 rounded-xl w-full sm:w-auto font-semibold text-white cursor-not-allowed"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636" /></svg>
-                            Registrations Closed
+                            Back to Event Portal
                         </button>
                     </div>
                 </div>
-            </div>
-
-            {/* Floating Indicator */}
-            <div className="bottom-8 left-8 fixed bg-white/50 dark:bg-gray-900/50 shadow-lg backdrop-blur-lg p-3 border border-gray-200 dark:border-gray-800 rounded-full">
-                <span className="px-2 font-bold text-blue-500 dark:text-blue-400">1</span>
             </div>
         </div>
     );
